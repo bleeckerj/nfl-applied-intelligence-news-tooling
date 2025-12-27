@@ -1,0 +1,72 @@
+/* Magazine Theme Styles */
+
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #333;
+    line-height: 1.4;
+}
+
+.masthead {
+    border-bottom: 4px solid #000;
+    margin-bottom: 10mm;
+    padding-bottom: 5mm;
+}
+
+.masthead__name {
+    font-size: 48pt;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: -1px;
+    text-align: center;
+}
+
+.headline {
+    font-family: "Georgia", serif;
+    font-weight: bold;
+}
+
+.page--frontpage .headline {
+    font-size: 36pt;
+    line-height: 1.1;
+}
+
+/* Inline Inserts (Callouts & Media) */
+.inline-insert {
+  break-inside: avoid;
+  margin-bottom: 4mm;
+  box-sizing: border-box;
+}
+
+.callout {
+  padding: 4mm;
+  border-left: 4px solid #333;
+  background: #f9f9f9;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 12pt;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.callout--width-all {
+  column-span: all;
+  margin: 6mm 0;
+}
+
+.callout--width-1 {
+  width: 100%;
+}
+
+.media img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.media--width-all {
+  column-span: all;
+  margin: 6mm 0;
+}
+
+.media--width-1 {
+  width: 100%;
+}

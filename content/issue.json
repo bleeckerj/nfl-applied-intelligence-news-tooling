@@ -1,5 +1,6 @@
 {
   "layout": "newspaper_tabloid",
+  "theme": "newspaper",
   "title": "The Near Future Times",
   "issue": "Vol. 1 No. 1",
   "date": "2025-10-15",
@@ -13,7 +14,7 @@
         "headline": "City Opens Office of Speculative Works",
         "dek": "A new department prototypes policies before they are laws.",
         "byline": "By J. Bleecker",
-        "body": "The city announced a new Office of Speculative Works tasked with piloting civic ideas as if they were products.\n\nEarly programs include a seasonal residency for policy prototypes. While the office is initially funded through grants, city officials hope to demonstrate value that leads to permanent budget allocation. When there is uncertainty about how a policy will play out, prototyping allows for real-world feedback before committing to full implementation.<br/>\n\n\"We want to move beyond think tanks and public comment,\" said the office's director. \"By treating policies as prototypes, we can learn what works and what doesn't in context.\"\n\nCritics worry that prototyping may delay necessary reforms or lead to half-measures. However, supporters argue that it provides a way to test ideas without full commitment, reducing risks associated with untested policies."
+        "body": "The city announced a new Office of Speculative Works tasked with piloting civic ideas as if they were products.\n\nEarly programs include a seasonal residency for policy prototypes. <callout width='1'>\"We want to move beyond think tanks and public comment.\"</callout> While the office is initially funded through grants, city officials hope to demonstrate value that leads to permanent budget allocation. When there is uncertainty about how a policy will play out, prototyping allows for real-world feedback before committing to full implementation.<br/>\n\n\"We want to move beyond think tanks and public comment,\" said the office's director. \"By treating policies as prototypes, we can learn what works and what doesn't in context.\"\n\nCritics worry that prototyping may delay necessary reforms or lead to half-measures. However, supporters argue that it provides a way to test ideas without full commitment, reducing risks associated with untested policies."
       },
       "briefs": [
         { "headline": "Signals Report", "body": "Weak signals are now tracked in a public dashboard." },
@@ -32,7 +33,7 @@
       "opinion": {
         "headline": "Why Every City Needs a Civic Prototyping Lab",
         "byline": "By K. Asimov",
-        "body": "Cities already run pilots, but they rarely capture the imagination of residents.\n\nA public lab invites participation and makes tradeoffs visible."
+        "body": "<media src='https://imagedelivery.net/gaLGizR3kCgx5yRLtiRIOw/4424beb2-2401-43e9-7d37-538d239a7200/public?format=png' caption='A remote image test' width='1' />Cities already run pilots, but they rarely capture the imagination of residents. It seems in this age of rapid change, we need spaces dedicated to imagining and testing futures together.\n\nA civic prototyping lab can serve as a hub for experimentation, bringing together policymakers, designers, and the public to co-create solutions. By making the process visible and participatory, such labs can build trust and foster innovation.\n\nMoreover, prototyping allows for iterative learning. Instead of committing to large-scale implementations that may fail, cities can test ideas on a smaller scale, gather feedback, and refine approaches before wider adoption. <media src='https://imagedelivery.net/gaLGizR3kCgx5yRLtiRIOw/4424beb2-2401-43e9-7d37-538d239a7200/public?format=png' caption='A remote image test' width='1' />\n\nA public lab invites participation and makes tradeoffs visible. But many cities lack the resources or political will to establish such spaces. Advocates must demonstrate the value of prototyping through successful pilots and community engagement.\n\nIn an era defined by uncertainty, civic prototyping labs offer a way to navigate change collaboratively. By embracing experimentation, cities can better prepare for the futures they wish to create."
       },
       "review": {
         "headline": "Review: The Forecast Museum",

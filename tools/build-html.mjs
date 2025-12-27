@@ -4,14 +4,60 @@ import nunjucks from "nunjucks";
 import { generateGridSvg } from "./lib/grid.mjs";
 
 const root = process.cwd();
-const dataPath = path.join(root, "content/issue.json");
+
+// Helper to process inline tags in body text
+function processBodyText(text) {
+  if (!text) return text;
+
+  // Process <callout>
+  text = text.replace(/<callout(?:\s+type=["']([^"']*)["'])?(?:\s+width=["']([^"']*)["'])?(?:\s+float=["']([^"']*)["'])?>([\s\S]*?)<\/callout>/g, (match, type, width, float, content) => {
+    const typeClass = type ? ` callout--type-${type}` : "";
+    const widthClass = width ? ` callout--width-${width}` : " callout--width-1";
+    const floatClass = float ? ` callout--float-${float}` : "";
+    return `<aside class="inline-insert callout${typeClass}${widthClass}${floatClass}"><div class="callout__content">${content}</div></aside>`;
+  });
+
+  // Process <media>
+  text = text.replace(/<media\s+src=["']([^"']*)["'](?:\s+caption=["']([^"']*)["'])?(?:\s+width=["']([^"']*)["'])?\s*\/?>/g, (match, src, caption, width) => {
+    const widthClass = width ? ` media--width-${width}` : " media--width-1";
+    const captionHtml = caption ? `<figcaption>${caption}</figcaption>` : "";
+    return `<figure class="inline-insert media${widthClass}"><img src="${src}" />${captionHtml}</figure>`;
+  });
+
+  return text;
+}
+
+// Recursive function to transform content
+function transformContent(obj) {
+  if (Array.isArray(obj)) {
+    return obj.map(transformContent);
+  } else if (typeof obj === 'object' && obj !== null) {
+    const newObj = {};
+    for (const key in obj) {
+      if (key === 'body' && typeof obj[key] === 'string') {
+         newObj[key] = processBodyText(obj[key]);
+      } else {
+         newObj[key] = transformContent(obj[key]);
+      }
+    }
+    return newObj;
+  }
+  return obj;
+}
+
+// Get content file from args or default
+const args = process.argv.slice(2);
+const contentFileArg = args.find(arg => !arg.startsWith('--'));
+const dataPath = contentFileArg ? path.resolve(root, contentFileArg) : path.join(root, "content/issue.json");
+
 const inventoryPath = path.join(root, "templates/inventory.json");
 
 const data = JSON.parse(fs.readFileSync(dataPath, "utf8"));
 const inventory = JSON.parse(fs.readFileSync(inventoryPath, "utf8"));
 
-// Determine layout
+// Determine layout and theme
 const layoutId = data.layout || "newspaper_tabloid";
+const theme = data.theme || "newspaper";
 const layout = inventory.layouts[layoutId];
 
 if (!layout) {
@@ -48,7 +94,10 @@ if (debugGrid) {
 nunjucks.configure(path.join(root, "templates"), { autoescape: true });
 
 // Render HTML
-const html = nunjucks.render("issue.njk", data);
+// Pass theme to template context
+const processedData = transformContent(data);
+const context = { ...processedData, theme };
+const html = nunjucks.render("issue.njk", context);
 
 // Render Layout CSS
 const css = nunjucks.render("layout.css.njk", { layout, debugGrid });

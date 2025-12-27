@@ -1,0 +1,26 @@
+{
+  "layout": "magazine_a4",
+  "theme": "magazine",
+  "title": "Future Mag",
+  "issue": "Issue 01",
+  "date": "2025-11-01",
+  "pages": [
+    {
+      "id": "p1",
+      "template": "frontpage_v1",
+      "masthead": "Future Mag",
+      "kicker": "Exclusive",
+      "lead": {
+        "headline": "The Rise of Synthetic Biology",
+        "dek": "How new labs are growing the future.",
+        "byline": "By A. Huxley",
+        "body": "In a small lab in Cambridge, the future is growing in a petri dish..."
+      },
+      "briefs": [],
+      "ad_1": {
+        "headline": "Subscribe Now",
+        "body": "Get the future delivered to your door."
+      }
+    }
+  ]
+}

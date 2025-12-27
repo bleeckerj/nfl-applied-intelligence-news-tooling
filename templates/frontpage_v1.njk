@@ -27,7 +27,7 @@
         {% endif %}
         <div class="body">
           {% for para in page.lead.body.split('\n\n') %}
-            <p>{{ para }}</p>
+            <p>{{ para | safe }}</p>
           {% endfor %}
         </div>
       </div>

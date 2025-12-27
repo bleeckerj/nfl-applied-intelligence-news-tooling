@@ -13,7 +13,7 @@
       {% if page.opinion.byline %}<p class="byline">{{ page.opinion.byline }}</p>{% endif %}
       <div class="body">
         {% for para in page.opinion.body.split('\n\n') %}
-          <p>{{ para }}</p>
+          <p>{{ para | safe }}</p>
         {% endfor %}
       </div>
     {% endif %}
@@ -25,7 +25,7 @@
       {% if page.review.rating %}<p class="meta">Rating: {{ page.review.rating }}</p>{% endif %}
       <div class="body">
         {% for para in page.review.body.split('\n\n') %}
-          <p>{{ para }}</p>
+          <p>{{ para | safe }}</p>
         {% endfor %}
       </div>
     {% endif %}

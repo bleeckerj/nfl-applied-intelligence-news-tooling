@@ -12,7 +12,7 @@
       <h2 class="section-title">{{ page.puzzle.title }}</h2>
       <div class="body">
         {% for para in page.puzzle.body.split('\n\n') %}
-          <p>{{ para }}</p>
+          <p>{{ para | safe }}</p>
         {% endfor %}
       </div>
     {% endif %}

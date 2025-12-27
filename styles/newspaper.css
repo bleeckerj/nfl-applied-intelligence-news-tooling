@@ -132,6 +132,7 @@ body {
   grid-row: 1;
   border-bottom: 0.6pt solid #000;
   padding-bottom: 2mm;
+  width: 100%;
 }
 
 .masthead__name {
@@ -139,6 +140,9 @@ body {
   font-size: 34pt;
   font-weight: 700;
   line-height: 1;
+  text-align: center;
+  display: block;
+  width: 100%;
 }
 
 .masthead__meta {
@@ -202,9 +206,9 @@ body {
   grid-row: 3 / span 2;
 }
 
-.headline { font-family: "Warbler Display", Georgia, serif; font-size: 26pt; line-height: 1.05; margin: 0 0 2mm 0; }
-.dek { font-family: "Warbler Deck", Georgia, serif; font-size: 12pt; margin: 0 0 2mm 0; }
-.byline { font-style: italic; font-size: 9pt; margin: 0 0 4mm 0; }
+.headline { font-family: "Warbler Display", Georgia, serif; font-size: 26pt; line-height: 1.05; margin: 0 0 2mm 0; text-align: left; }
+.dek { font-family: "Warbler Deck", Georgia, serif; font-size: 12pt; margin: 0 0 2mm 0; text-align: left; }
+.byline { font-style: italic; font-size: 9pt; margin: 0 0 4mm 0; text-align: left; }
 .headline,
 .section-title,
 .ad__headline {
@@ -245,6 +249,7 @@ body {
   font-family: "Warbler Deck", Georgia, serif;
   font-size: 12pt;
   margin: 0 0 2mm 0;
+  text-align: left;
 }
 
 .brief, .classified {
@@ -266,6 +271,7 @@ body {
   font-family: "Untitled Sans", Arial, sans-serif;
   font-size: 14pt;
   margin: 0 0 2mm 0;
+  text-align: left;
 }
 
 .ad__body {
@@ -275,3 +281,50 @@ body {
 
 /* Debug grid positioning */
 /* .debug-grid removed as it is now handled via @page background */
+
+/* Inline Inserts (Callouts & Media) */
+.inline-insert {
+  break-inside: avoid;
+  margin-bottom: 4mm;
+  box-sizing: border-box;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.callout {
+  padding: 4mm;
+  border-top: 2px solid #000;
+  border-bottom: 2px solid #000;
+  font-family: "Untitled Sans", sans-serif;
+  font-size: 11pt;
+  line-height: 1.3;
+  background: #fff;
+}
+
+.callout--width-all {
+  column-span: all;
+  margin: 6mm 0;
+}
+
+.callout--width-1 {
+  width: 100%;
+  float: top;
+}
+
+.media img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.media--width-all {
+  column-span: all;
+  margin: 6mm 0;
+}
+
+.media--width-1 {
+  width: 100%;
+  float: top;
+  margin-left: 0;
+  margin-right: 0;
+}
