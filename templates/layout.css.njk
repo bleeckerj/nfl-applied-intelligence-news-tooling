@@ -1,0 +1,37 @@
+/* Generated Layout CSS for {{ layout.name }} */
+
+@page {
+  size: {{ layout.width }} {{ layout.height }};
+  margin: {{ layout.margin }};
+  {% if debugGrid %}
+  background-image: url("../grid.svg");
+  background-position: top left;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  {% endif %}
+}
+
+@media screen {
+  body {
+    width: calc({{ layout.width }} - ({{ layout.margin }} * 2));
+    height: calc({{ layout.height }} - ({{ layout.margin }} * 2));
+    margin: {{ layout.margin }} auto;
+    padding: 0;
+    box-sizing: border-box;
+    position: relative;
+    background: white;
+    box-shadow: 0 0 0 {{ layout.margin }} white, 0 0 10px {{ layout.margin }} rgba(0,0,0,0.1);
+  }
+}
+
+.page {
+  break-after: page;
+  display: grid;
+  grid-template-columns: repeat({{ layout.cols }}, 1fr);
+  column-gap: {{ layout.gutter }};
+  row-gap: {{ layout.gutter }};
+  grid-auto-rows: minmax(0, 1fr);
+  align-content: start;
+  height: calc({{ layout.height }} - ({{ layout.margin }} * 2));
+  box-sizing: border-box;
+}

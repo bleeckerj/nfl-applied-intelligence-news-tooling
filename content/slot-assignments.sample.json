@@ -1,0 +1,30 @@
+{
+  "issue_id": "2025-10-15",
+  "inventory_id": "templates/inventory.json",
+  "assignments": [
+    {
+      "slot_id": "p1.lead",
+      "source": "generated",
+      "draft_id": "07",
+      "draft_path": "../nfl-remember-the-future/projects/issue-2025/drafts/07_city-imagination.md"
+    },
+    {
+      "slot_id": "p1.briefs",
+      "source": "curated",
+      "draft_id": "12",
+      "draft_path": "../nfl-remember-the-future/projects/issue-2025/drafts/12_signals-report.md"
+    },
+    {
+      "slot_id": "p1.ad_1",
+      "source": "manual",
+      "title": "This Week at the Future Market",
+      "body": "Three days only. Prototypes, demos, and a quiet lounge for discussing what comes next."
+    },
+    {
+      "slot_id": "p4.puzzle",
+      "source": "manual",
+      "title": "Near-Future Mini Crossword",
+      "body": "Across: 1) The agency tasked with speculative policy pilots (5). Down: 2) Civic ritual of scenario rehearsal (6)."
+    }
+  ]
+}

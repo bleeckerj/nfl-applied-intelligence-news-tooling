@@ -1,0 +1,149 @@
+:root {
+  --page-w: 350mm;
+  --page-h: 500mm;
+  --margin: 15mm;
+  --gutter: 4mm;
+  --grid-line: rgba(0, 0, 0, 0.16);
+  --margin-line: rgba(0, 0, 0, 0.4);
+  --colw: calc((var(--page-w) - 30mm - 20mm) / 6);
+  --rowh: calc((var(--page-h) - 30mm - 44mm) / 12);
+}
+
+@page {
+  size: var(--page-w) var(--page-h);
+  margin: 0;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: "Untitled Sans", Arial, sans-serif;
+  font-size: 10pt;
+  color: #111;
+}
+
+.page {
+  width: var(--page-w);
+  height: var(--page-h);
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(12, 1fr);
+  gap: var(--gutter);
+  border: 0.7pt solid #000;
+  break-after: page;
+  background-image:
+    repeating-linear-gradient(
+      to right,
+      var(--grid-line) 0,
+      var(--grid-line) 0.2pt,
+      transparent 0.2pt,
+      transparent var(--colw)
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      var(--grid-line) 0,
+      var(--grid-line) 0.2pt,
+      transparent 0.2pt,
+      transparent var(--rowh)
+    );
+  background-size:
+    calc(var(--colw) + var(--gutter)) 100%,
+    100% calc(var(--rowh) + var(--gutter));
+  background-position: var(--margin) var(--margin);
+  position: relative;
+}
+
+.slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 3mm;
+  box-sizing: border-box;
+  letter-spacing: 0.3pt;
+  font-size: 7pt;
+  border: 0;
+  background: transparent;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.page::before {
+  content: "";
+  position: absolute;
+  inset: var(--margin);
+  border: 0.7pt solid var(--margin-line);
+  pointer-events: none;
+}
+
+/* NYT-style front page grid */
+.slot--masthead {
+  grid-column: 1 / span 6;
+  grid-row: 1 / span 1;
+}
+
+.slot--nav {
+  grid-column: 1 / span 6;
+  grid-row: 2 / span 1;
+}
+
+.slot--main-head {
+  grid-column: 1 / span 4;
+  grid-row: 3 / span 1;
+}
+
+.slot--right-rail {
+  grid-column: 5 / span 2;
+  grid-row: 3 / span 10;
+}
+
+.slot--main-photo {
+  grid-column: 1 / span 4;
+  grid-row: 4 / span 3;
+}
+
+.slot--main-story {
+  grid-column: 1 / span 4;
+  grid-row: 7 / span 4;
+}
+
+.slot--below-fold {
+  grid-column: 1 / span 4;
+  grid-row: 11 / span 2;
+}
+
+/* New Yorker-style story page grid */
+.page--story .slot--running-head {
+  grid-column: 1 / span 6;
+  grid-row: 1 / span 1;
+}
+
+.page--story .slot--story-title {
+  grid-column: 2 / span 4;
+  grid-row: 2 / span 1;
+}
+
+.page--story .slot--story-dek {
+  grid-column: 2 / span 3;
+  grid-row: 3 / span 1;
+}
+
+.page--story .slot--story-byline {
+  grid-column: 2 / span 2;
+  grid-row: 4 / span 1;
+}
+
+.page--story .slot--story-body {
+  grid-column: 2 / span 4;
+  grid-row: 5 / span 5;
+}
+
+.page--story .slot--story-art {
+  grid-column: 2 / span 4;
+  grid-row: 10 / span 1;
+}
+
+.page--story .slot--story-continue {
+  grid-column: 2 / span 4;
+  grid-row: 11 / span 2;
+}

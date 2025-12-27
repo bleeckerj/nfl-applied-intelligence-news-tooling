@@ -1,0 +1,57 @@
+<section class="page page--frontpage" data-page-id="{{ page.id }}">
+  <header class="masthead">
+    <div class="masthead__name">{{ page.masthead or title }}</div>
+    <div class="masthead__meta">
+      <span>{{ issue }}</span>
+      <span>{{ date }}</span>
+      {% if page.kicker %}<span>{{ page.kicker }}</span>{% endif %}
+    </div>
+  </header>
+
+  <article class="slot slot--lead">
+    {% if page.lead %}
+      <h1 class="headline">{{ page.lead.headline }}</h1>
+      {% if page.lead.dek %}<p class="dek">{{ page.lead.dek }}</p>{% endif %}
+      {% if page.lead.byline %}<p class="byline">{{ page.lead.byline }}</p>{% endif %}
+      <div class="lead__wrap">
+        {% if page.lead.image %}
+          <figure class="figure">
+            {% set img_src = page.lead.image.src %}
+            {% if img_src and (img_src.startsWith("http://") or img_src.startsWith("https://")) %}
+              <img src="{{ img_src }}" alt="" />
+            {% else %}
+              <img src="{{ img_src }}" alt="" />
+            {% endif %}
+            {% if page.lead.image.caption %}<figcaption>{{ page.lead.image.caption }}</figcaption>{% endif %}
+          </figure>
+        {% endif %}
+        <div class="body">
+          {% for para in page.lead.body.split('\n\n') %}
+            <p>{{ para }}</p>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+  </article>
+
+  <aside class="slot slot--briefs">
+    <h2 class="section-title">Briefs</h2>
+    {% for b in page.briefs %}
+      <div class="brief">
+        <h3>{{ b.headline }}</h3>
+        <p>{{ b.body }}</p>
+      </div>
+    {% endfor %}
+  </aside>
+
+  {#
+    <aside class="slot slot--ad slot--ad-1">
+      {% if page.ad_1 %}
+        <div class="ad">
+          <h2 class="ad__headline">{{ page.ad_1.headline }}</h2>
+          <p class="ad__body">{{ page.ad_1.body }}</p>
+        </div>
+      {% endif %}
+    </aside>
+  #}
+</section>

@@ -1,0 +1,201 @@
+{
+  "layouts": {
+    "newspaper_tabloid": {
+      "name": "Tabloid Newspaper",
+      "width": "289mm",
+      "height": "380mm",
+      "margin": "15mm",
+      "cols": 12,
+      "gutter": "4mm",
+      "rows": 12
+    },
+    "magazine_a4": {
+      "name": "A4 Magazine",
+      "width": "210mm",
+      "height": "297mm",
+      "margin": "12mm",
+      "cols": 6,
+      "gutter": "5mm",
+      "rows": 8
+    },
+    "broadsheet": {
+      "name": "Broadsheet",
+      "width": "375mm",
+      "height": "600mm",
+      "margin": "20mm",
+      "cols": 12,
+      "gutter": "4mm",
+      "rows": 16
+    }
+  },
+  "content_types": {
+    "newspaper_1": {
+      "templates": [
+        {
+          "id": "frontpage_v1",
+          "slots": [
+            {
+              "slot_id": "p1.lead",
+              "type": "lead",
+              "module_id": "lead_story",
+              "copy_budget": { "headline_chars": 70, "dek_words": 24, "body_words": 650 },
+              "assets": { "image": { "required": true, "aspect": "3:2" } }
+            },
+            {
+              "slot_id": "p1.briefs",
+              "type": "briefs",
+              "module_id": "briefs_column",
+              "copy_budget": { "items": 3, "body_words": 80 }
+            },
+            {
+              "slot_id": "p1.ad_1",
+              "type": "ad",
+              "module_id": "ad_halfpage",
+              "copy_budget": { "headline_chars": 40, "body_words": 120 },
+              "assets": { "image": { "required": false } }
+            }
+          ]
+        },
+        {
+          "id": "inside_v1",
+          "slots": [
+            {
+              "slot_id": "p2.opinion",
+              "type": "opinion",
+              "module_id": "opinion_column",
+              "copy_budget": { "headline_chars": 60, "body_words": 500 }
+            },
+            {
+              "slot_id": "p2.review",
+              "type": "review",
+              "module_id": "review_box",
+              "copy_budget": { "headline_chars": 60, "body_words": 300 }
+            },
+            {
+              "slot_id": "p2.ad_1",
+              "type": "ad",
+              "module_id": "ad_quarter",
+              "copy_budget": { "headline_chars": 30, "body_words": 60 }
+            }
+          ]
+        }
+      ]
+    },
+    "newspaper_2": {
+      "templates": [
+        {
+          "id": "backpage_v1",
+          "slots": [
+            {
+              "slot_id": "p4.puzzle",
+              "type": "puzzle",
+              "module_id": "puzzle_small",
+              "copy_budget": { "body_words": 80 }
+            },
+            {
+              "slot_id": "p4.cartoon",
+              "type": "cartoon",
+              "module_id": "cartoon_strip",
+              "copy_budget": { "caption_words": 20 },
+              "assets": { "image": { "required": true, "aspect": "4:1" } }
+            },
+            {
+              "slot_id": "p4.classifieds",
+              "type": "classifieds",
+              "module_id": "classifieds_list",
+              "copy_budget": { "items": 8, "body_words": 40 }
+            }
+          ]
+        }
+      ]
+    },
+    "magazine_1": {
+      "templates": [
+        {
+          "id": "feature_v1",
+          "slots": [
+            {
+              "slot_id": "m1.feature",
+              "type": "longform",
+              "module_id": "feature_spread",
+              "copy_budget": { "headline_chars": 70, "dek_words": 30, "body_words": 1400 },
+              "assets": { "image": { "required": true, "aspect": "16:9" } }
+            },
+            {
+              "slot_id": "m1.ad_1",
+              "type": "ad",
+              "module_id": "ad_fullpage",
+              "copy_budget": { "headline_chars": 50, "body_words": 120 }
+            }
+          ]
+        }
+      ]
+    },
+    "magazine_2": {
+      "templates": [
+        {
+          "id": "reviews_v1",
+          "slots": [
+            {
+              "slot_id": "m2.review_1",
+              "type": "review",
+              "module_id": "review_box",
+              "copy_budget": { "headline_chars": 60, "body_words": 300 }
+            },
+            {
+              "slot_id": "m2.review_2",
+              "type": "review",
+              "module_id": "review_box",
+              "copy_budget": { "headline_chars": 60, "body_words": 300 }
+            }
+          ]
+        }
+      ]
+    },
+    "catalog_1": {
+      "templates": [
+        {
+          "id": "catalog_grid_v1",
+          "slots": [
+            {
+              "slot_id": "c1.product_1",
+              "type": "product",
+              "module_id": "product_card",
+              "copy_budget": { "title_chars": 50, "body_words": 80 },
+              "assets": { "image": { "required": true, "aspect": "1:1" } }
+            },
+            {
+              "slot_id": "c1.product_2",
+              "type": "product",
+              "module_id": "product_card",
+              "copy_budget": { "title_chars": 50, "body_words": 80 },
+              "assets": { "image": { "required": true, "aspect": "1:1" } }
+            }
+          ]
+        }
+      ]
+    },
+    "catalog_2": {
+      "templates": [
+        {
+          "id": "catalog_feature_v1",
+          "slots": [
+            {
+              "slot_id": "c2.feature",
+              "type": "product_feature",
+              "module_id": "product_feature",
+              "copy_budget": { "headline_chars": 60, "body_words": 600 },
+              "assets": { "image": { "required": true, "aspect": "3:2" } }
+            },
+            {
+              "slot_id": "c2.ad_1",
+              "type": "ad",
+              "module_id": "ad_halfpage",
+              "copy_budget": { "headline_chars": 40, "body_words": 120 }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

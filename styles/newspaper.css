@@ -1,0 +1,277 @@
+@font-face {
+  font-family: "Warbler Text";
+  src: url("fonts/warbler/WarblerTextV1.2-Regular.woff2") format("woff2"),
+       url("fonts/warbler/WarblerTextV1.2-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Warbler Text";
+  src: url("fonts/warbler/WarblerTextV1.2-Italic.woff2") format("woff2"),
+       url("fonts/warbler/WarblerTextV1.2-Italic.woff") format("woff");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Warbler Text";
+  src: url("fonts/warbler/WarblerTextV1.2-Bold.woff2") format("woff2"),
+       url("fonts/warbler/WarblerTextV1.2-Bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Warbler Text";
+  src: url("fonts/warbler/WarblerTextV1.2-BoldItalic.woff2") format("woff2"),
+       url("fonts/warbler/WarblerTextV1.2-BoldItalic.woff") format("woff");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Warbler Display";
+  src: url("fonts/warbler/WarblerDisplayV1.2-Regular.woff2") format("woff2"),
+       url("fonts/warbler/WarblerDisplayV1.2-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Warbler Deck";
+  src: url("fonts/warbler/WarblerDeckV1.2-Regular.woff2") format("woff2"),
+       url("fonts/warbler/WarblerDeckV1.2-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Warbler Banner";
+  src: url("fonts/warbler/WarblerBannerV1.2-Regular.woff2") format("woff2"),
+       url("fonts/warbler/WarblerBannerV1.2-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Irvin Heading Pro";
+  src: url("fonts/irvin-heading-pro/IrvinHeadingPro.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Untitled Sans";
+  src: url("fonts/UntitledSans/UntitledSans-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Untitled Sans";
+  src: url("fonts/UntitledSans/UntitledSans-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+html, body {
+  font-family: "Warbler Text", Georgia, serif;
+  font-size: 10.5pt;
+  line-height: 1.25;
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+
+p {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+body {
+  margin: 0;
+}
+
+.page {
+  break-after: page;
+  display: grid;
+  /* Grid columns/gaps defined in layout.css */
+  grid-auto-rows: minmax(0, 1fr);
+  align-content: start;
+  /* Height defined in layout.css */
+  box-sizing: border-box;
+}
+
+.page--frontpage {
+  grid-template-rows: 28mm 1fr 1fr 36mm;
+}
+
+.page--inside {
+  grid-template-rows: 24mm 1fr 1fr 32mm;
+}
+
+.page--backpage {
+  grid-template-rows: 24mm 1.1fr 0.9fr 1fr;
+}
+
+.page--frontpage .masthead,
+.page--inside .masthead,
+.page--backpage .masthead {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  border-bottom: 0.6pt solid #000;
+  padding-bottom: 2mm;
+}
+
+.masthead__name {
+  font-family: "Irvin Heading Pro", "Warbler Banner", Georgia, serif;
+  font-size: 34pt;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.masthead__meta {
+  display: flex;
+  gap: 10mm;
+  font-family: "Untitled Sans", Arial, sans-serif;
+  font-size: 9pt;
+  margin-top: 1mm;
+}
+
+.masthead--small .masthead__name {
+  font-size: 20pt;
+}
+
+.slot {
+  min-width: 0;
+  overflow: hidden;
+}
+.page--frontpage .slot--lead {
+  grid-column: 1 / span 8;
+  grid-row: 2 / span 2;
+}
+
+.page--frontpage .slot--briefs {
+  grid-column: 9 / span 4;
+  grid-row: 2 / span 3;
+}
+
+.page--frontpage .slot--ad-1 {
+  grid-column: 1 / span 8;
+  grid-row: 4;
+}
+
+.page--inside .slot--opinion {
+  grid-column: 1 / span 6;
+  grid-row: 2 / span 2;
+}
+
+.page--inside .slot--review {
+  grid-column: 7 / span 6;
+  grid-row: 2 / span 3;
+}
+
+.page--inside .slot--ad-1 {
+  grid-column: 1 / span 8;
+  grid-row: 4;
+}
+
+.page--backpage .slot--cartoon {
+  grid-column: 1 / span 12;
+  grid-row: 2;
+}
+
+.page--backpage .slot--puzzle {
+  grid-column: 1 / span 6;
+  grid-row: 3 / span 2;
+}
+
+.page--backpage .slot--classifieds {
+  grid-column: 7 / span 6;
+  grid-row: 3 / span 2;
+}
+
+.headline { font-family: "Warbler Display", Georgia, serif; font-size: 26pt; line-height: 1.05; margin: 0 0 2mm 0; }
+.dek { font-family: "Warbler Deck", Georgia, serif; font-size: 12pt; margin: 0 0 2mm 0; }
+.byline { font-style: italic; font-size: 9pt; margin: 0 0 4mm 0; }
+.headline,
+.section-title,
+.ad__headline {
+  margin-top: 0;
+}
+
+.lead__wrap {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3mm;
+}
+
+.slot--lead .body,
+.slot--opinion .body {
+  column-count: 2;
+  column-gap: 5mm;
+  column-fill: auto;
+  widows: 2;
+  orphans: 2;
+}
+
+.figure {
+  margin: 0;
+}
+
+.figure img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.figure figcaption {
+  font-size: 8pt;
+  margin-top: 1mm;
+}
+
+.section-title {
+  font-family: "Warbler Deck", Georgia, serif;
+  font-size: 12pt;
+  margin: 0 0 2mm 0;
+}
+
+.brief, .classified {
+  break-inside: avoid;
+  margin-bottom: 3mm;
+}
+
+.ad {
+  border: 0.6pt solid #000;
+  padding: 3mm;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.ad__headline {
+  font-family: "Untitled Sans", Arial, sans-serif;
+  font-size: 14pt;
+  margin: 0 0 2mm 0;
+}
+
+.ad__body {
+  font-size: 9.5pt;
+  margin: 0;
+}
+
+/* Debug grid positioning */
+/* .debug-grid removed as it is now handled via @page background */

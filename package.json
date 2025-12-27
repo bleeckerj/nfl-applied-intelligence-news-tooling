@@ -1,0 +1,20 @@
+{
+  "name": "nfl-futures-in-print",
+  "type": "module",
+  "private": true,
+  "dependencies": {
+    "nunjucks": "^3.2.4"
+  },
+  "scripts": {
+    "build:html": "node tools/build-html.mjs",
+    "build:pdf": "npm run build:html && npx vivliostyle build dist/index.html -o dist/issue.pdf -s \"289mm,380mm\"",
+    "build": "npm run build:pdf",
+    "preview": "npm run build:html && npx vivliostyle preview dist/index.html",
+    "preview:html": "npm run build:html",
+    "grid:html": "node tools/build-grid.mjs",
+    "grid:pdf": "node tools/make-grid-pdf.mjs"
+  },
+  "devDependencies": {
+    "@vivliostyle/cli": "^10.2.0"
+  }
+}

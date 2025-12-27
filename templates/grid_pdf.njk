@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Grid {{ cols }}x{{ rows }}</title>
+    <style>
+      @page {
+        size: {{ width }} {{ height }};
+        margin: 0;
+      }
+
+      html, body {
+        margin: 0;
+        padding: 0;
+        width: {{ width }};
+        height: {{ height }};
+        background: #fff;
+      }
+
+      .page {
+        width: {{ width }};
+        height: {{ height }};
+        position: relative;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      {{ svgContent | safe }}
+    </div>
+  </body>
+</html>

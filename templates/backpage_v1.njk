@@ -1,0 +1,44 @@
+<section class="page page--backpage" data-page-id="{{ page.id }}">
+  <header class="masthead masthead--small">
+    <div class="masthead__name">{{ page.masthead or title }}</div>
+    <div class="masthead__meta">
+      <span>{{ issue }}</span>
+      <span>{{ date }}</span>
+    </div>
+  </header>
+
+  <article class="slot slot--puzzle">
+    {% if page.puzzle %}
+      <h2 class="section-title">{{ page.puzzle.title }}</h2>
+      <div class="body">
+        {% for para in page.puzzle.body.split('\n\n') %}
+          <p>{{ para }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </article>
+
+  <article class="slot slot--cartoon">
+    {% if page.cartoon %}
+      <figure class="figure">
+        {% set img_src = page.cartoon.image.src %}
+        {% if img_src and (img_src.startsWith("http://") or img_src.startsWith("https://")) %}
+          <img src="{{ img_src }}" alt="" />
+        {% else %}
+          <img src="{{ img_src }}" alt="" />
+        {% endif %}
+        {% if page.cartoon.caption %}<figcaption>{{ page.cartoon.caption }}</figcaption>{% endif %}
+      </figure>
+    {% endif %}
+  </article>
+
+  <article class="slot slot--classifieds">
+    <h2 class="section-title">Classifieds</h2>
+    {% for item in page.classifieds %}
+      <div class="classified">
+        <h3>{{ item.headline }}</h3>
+        <p>{{ item.body }}</p>
+      </div>
+    {% endfor %}
+  </article>
+</section>

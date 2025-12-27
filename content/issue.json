@@ -1,0 +1,65 @@
+{
+  "layout": "newspaper_tabloid",
+  "title": "The Near Future Times",
+  "issue": "Vol. 1 No. 1",
+  "date": "2025-10-15",
+  "pages": [
+    {
+      "id": "p1",
+      "template": "frontpage_v1",
+      "masthead": "The Near Future Times",
+      "kicker": "Special Edition",
+      "lead": {
+        "headline": "City Opens Office of Speculative Works",
+        "dek": "A new department prototypes policies before they are laws.",
+        "byline": "By J. Bleecker",
+        "body": "The city announced a new Office of Speculative Works tasked with piloting civic ideas as if they were products.\n\nEarly programs include a seasonal residency for policy prototypes. While the office is initially funded through grants, city officials hope to demonstrate value that leads to permanent budget allocation. When there is uncertainty about how a policy will play out, prototyping allows for real-world feedback before committing to full implementation.<br/>\n\n\"We want to move beyond think tanks and public comment,\" said the office's director. \"By treating policies as prototypes, we can learn what works and what doesn't in context.\"\n\nCritics worry that prototyping may delay necessary reforms or lead to half-measures. However, supporters argue that it provides a way to test ideas without full commitment, reducing risks associated with untested policies."
+      },
+      "briefs": [
+        { "headline": "Signals Report", "body": "Weak signals are now tracked in a public dashboard." },
+        { "headline": "Lab Opens", "body": "A new lab will prototype community rituals." },
+        { "headline": "Transit Trial", "body": "A pilot route tests time-shifted commuting." }
+      ],
+      "ad_1": {
+        "headline": "Future Market Weekend",
+        "body": "Artifacts, demos, and a quiet lounge for negotiating what comes next."
+      }
+    },
+    {
+      "id": "p2",
+      "template": "inside_v1",
+      "masthead": "The Near Future Times",
+      "opinion": {
+        "headline": "Why Every City Needs a Civic Prototyping Lab",
+        "byline": "By K. Asimov",
+        "body": "Cities already run pilots, but they rarely capture the imagination of residents.\n\nA public lab invites participation and makes tradeoffs visible."
+      },
+      "review": {
+        "headline": "Review: The Forecast Museum",
+        "rating": "4/5",
+        "body": "The exhibit turns predictions into rooms you can walk through.\n\nCareful, playful, and surprisingly humane."
+      },
+      "ad_1": {
+        "headline": "Neighborhood Assembly Tonight",
+        "body": "Bring one proposal and leave with three allies."
+      }
+    },
+    {
+      "id": "p4",
+      "template": "backpage_v1",
+      "masthead": "The Near Future Times",
+      "puzzle": {
+        "title": "Mini Crossword",
+        "body": "Across: 1) The agency tasked with speculative pilots (5).\n\nDown: 2) A rehearsal for possible futures (6)."
+      },
+      "cartoon": {
+        "image": { "src": "images/cartoon.svg" },
+        "caption": "When the prototype works on the first try."
+      },
+      "classifieds": [
+        { "headline": "For Sale", "body": "Gently used scenario cards, 40-piece deck." },
+        { "headline": "Wanted", "body": "Stories from the near future. Paid by the line." }
+      ]
+    }
+  ]
+}

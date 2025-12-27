@@ -1,0 +1,106 @@
+import fs from "node:fs";
+import path from "node:path";
+import nunjucks from "nunjucks";
+import { generateGridSvg } from "./lib/grid.mjs";
+
+const root = process.cwd();
+const dataPath = path.join(root, "content/issue.json");
+const inventoryPath = path.join(root, "templates/inventory.json");
+
+const data = JSON.parse(fs.readFileSync(dataPath, "utf8"));
+const inventory = JSON.parse(fs.readFileSync(inventoryPath, "utf8"));
+
+// Determine layout
+const layoutId = data.layout || "newspaper_tabloid";
+const layout = inventory.layouts[layoutId];
+
+if (!layout) {
+  console.error(`Error: Layout "${layoutId}" not found in inventory.`);
+  process.exit(1);
+}
+
+console.log(`Using layout: ${layout.name} (${layoutId})`);
+
+// Parse layout for grid generator (remove 'mm' and convert to number)
+const parseDim = (val) => (typeof val === "string" ? parseFloat(val) : val);
+const gridConfig = {
+  width: layout.width,
+  height: layout.height,
+  cols: layout.cols,
+  rows: layout.rows,
+  margin: parseDim(layout.margin),
+  gutter: parseDim(layout.gutter),
+  overlay: false,
+  useOffset: true,
+};
+
+// Inject grid SVG if debug flag is present
+const debugGrid = process.argv.includes("--debug-grid");
+if (debugGrid) {
+  // Disable offset for background image usage
+  gridConfig.useOffset = false;
+  const gridSvg = generateGridSvg(gridConfig);
+  // Ensure dist exists before writing grid.svg (it is created later, so we need to do it now or move this)
+  fs.mkdirSync(path.join(root, "dist"), { recursive: true });
+  fs.writeFileSync(path.join(root, "dist/grid.svg"), gridSvg, "utf8");
+}
+
+nunjucks.configure(path.join(root, "templates"), { autoescape: true });
+
+// Render HTML
+const html = nunjucks.render("issue.njk", data);
+
+// Render Layout CSS
+const css = nunjucks.render("layout.css.njk", { layout, debugGrid });
+
+fs.mkdirSync(path.join(root, "dist"), { recursive: true });
+fs.writeFileSync(path.join(root, "dist/index.html"), html, "utf8");
+
+const distStyles = path.join(root, "dist/styles");
+const distImages = path.join(root, "dist/images");
+fs.mkdirSync(distStyles, { recursive: true });
+fs.mkdirSync(distImages, { recursive: true });
+
+fs.writeFileSync(path.join(distStyles, "layout.css"), css, "utf8");
+fs.cpSync(path.join(root, "styles"), distStyles, { recursive: true });
+if (fs.existsSync(path.join(root, "images"))) {
+  fs.cpSync(path.join(root, "images"), distImages, { recursive: true });
+}
+
+const previewPath = path.join(root, "preview.html");
+const previewHtml = `<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Print Preview</title>
+    <style>
+      :root { color-scheme: light; }
+      html, body { margin: 0; padding: 0; background: #f0f0f0; }
+      body { display: grid; place-items: center; min-height: 100vh; }
+      .frame {
+        width: ${layout.width};
+        height: ${layout.height};
+        border: 1px solid #999;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        background: #fff;
+      }
+      .note {
+        font-family: Arial, sans-serif;
+        font-size: 12px;
+        color: #444;
+        margin: 12px 0 0;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <iframe class="frame" src="dist/index.html"></iframe>
+      <div class="note">Fixed-size preview (${layout.width} x ${layout.height})</div>
+    </div>
+  </body>
+</html>`;
+
+fs.writeFileSync(previewPath, previewHtml, "utf8");
+
+console.log("Wrote dist/index.html and dist/styles/layout.css");

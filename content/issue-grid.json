@@ -1,0 +1,13 @@
+{
+  "title": "Layout Grids",
+  "pages": [
+    {
+      "id": "nyt-frontpage",
+      "template": "grid_frontpage_nyt"
+    },
+    {
+      "id": "newyorker-story",
+      "template": "grid_story_newyorker"
+    }
+  ]
+}
