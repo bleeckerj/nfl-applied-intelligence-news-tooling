@@ -12,7 +12,9 @@
     "preview": "npm run build:html && npx vivliostyle preview dist/index.html",
     "preview:html": "npm run build:html",
     "grid:html": "node tools/build-grid.mjs",
-    "grid:pdf": "node tools/make-grid-pdf.mjs"
+    "grid:pdf": "node tools/make-grid-pdf.mjs",
+    "bundle:indesign": "node tools/bundle-for-indesign.js",
+    "indesign:run": "node tools/run-id-script.mjs"
   },
   "devDependencies": {
     "@vivliostyle/cli": "^10.2.0"

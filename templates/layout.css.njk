@@ -3,6 +3,23 @@
 @page {
   size: {{ layout.width }} {{ layout.height }};
   margin: {{ layout.margin }};
+  
+  /* Page Numbering */
+  @bottom-center {
+    content: counter(page);
+    font-family: "Untitled Sans", sans-serif;
+    font-size: 9pt;
+  }
+
+  /* Running Header (Section Name) */
+  @top-right {
+    content: string(section-title);
+    font-family: "Untitled Sans", sans-serif;
+    font-size: 9pt;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
   {% if debugGrid %}
   background-image: url("../grid.svg");
   background-position: top left;

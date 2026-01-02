@@ -248,7 +248,13 @@ body {
 .section-title {
   font-family: "Warbler Deck", Georgia, serif;
   font-size: 12pt;
-  margin: 0 0 2mm 0;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-bottom: 2px solid #000;
+  margin-bottom: 4mm;
+  padding-bottom: 1mm;
+  string-set: section-title content(); /* Sets the running header */
+}  margin: 0 0 2mm 0;
   text-align: left;
 }
 
@@ -327,4 +333,56 @@ body {
   float: top;
   margin-left: 0;
   margin-right: 0;
+}
+
+/* Fluid Layout Test Styles */
+.fluid-wrapper {
+  grid-column: 1 / -1;
+  grid-row: 2 / -1;
+  display: block;
+  column-count: 3;
+  column-gap: 4mm;
+  column-fill: auto;
+  height: 100%;
+}
+
+.fluid-sidebar {
+  float: right;
+  float-reference: page;
+  width: calc((100% - 8mm) / 3); /* Exact width of 4 grid columns */
+  margin-top: 32mm; /* 28mm Masthead + 4mm Gap */
+  background: #f4f4f4;
+  padding: 4mm;
+  margin-bottom: 4mm;
+  break-inside: avoid;
+  border-top: 4px solid #000;
+  box-sizing: border-box;
+}
+
+.fluid-story {
+  /* No special styles needed, it flows naturally */
+}
+
+.fluid-figure {
+  column-span: all; /* Span across all columns at the top */
+  margin-bottom: 6mm;
+}
+
+/* Threaded Text Styles */
+.page--threaded {
+  /* Inherits grid from .page */
+}
+
+.story-frame {
+  /* Visual debugging */
+  /* border: 1px dashed red; */
+  overflow: hidden; /* Essential for the script to detect overflow */
+  text-align: justify;
+}
+
+.sidebar-box {
+  background: #f4f4f4;
+  padding: 4mm;
+  border-top: 4px solid #000;
+  box-sizing: border-box;
 }

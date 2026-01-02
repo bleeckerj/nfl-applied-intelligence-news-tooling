@@ -1,0 +1,116 @@
+<section class="page page--frontpage page--threaded" data-page-id="{{ page.id }}">
+  <header class="masthead">
+    <div class="masthead__name">{{ page.masthead or title }}</div>
+    <div class="masthead__meta">
+      <span>{{ issue }}</span>
+      <span>{{ date }}</span>
+      {% if page.kicker %}<span>{{ page.kicker }}</span>{% endif %}
+    </div>
+  </header>
+
+  {# The Source Text (Hidden) #}
+  <div id="source-text" style="display: none;">
+    {% if page.lead %}
+      <h1 class="headline">{{ page.lead.headline }}</h1>
+      {% if page.lead.dek %}<p class="dek">{{ page.lead.dek }}</p>{% endif %}
+      {% if page.lead.byline %}<p class="byline">{{ page.lead.byline }}</p>{% endif %}
+      {{ page.lead.body | safe | nl2br }}
+    {% endif %}
+  </div>
+
+  {# The Story Frames (Target Containers) #}
+  {% for frame in page.story_frames %}
+    <div class="story-frame" 
+         data-frame-index="{{ loop.index0 }}"
+         style="grid-column: {{ frame.grid_column }}; grid-row: {{ frame.grid_row }};">
+      <!-- Content will be injected here -->
+    </div>
+  {% endfor %}
+
+  {# The Sidebar (Fixed Position) #}
+  {% if page.sidebar %}
+    <aside class="sidebar-box" style="grid-column: {{ page.sidebar.grid_column }}; grid-row: {{ page.sidebar.grid_row }};">
+      <h2 class="section-title">{{ page.sidebar.headline }}</h2>
+      {% for item in page.sidebar.items %}
+        <div class="brief">
+          <h3>{{ item.headline }}</h3>
+          <p>{{ item.body }}</p>
+        </div>
+      {% endfor %}
+    </aside>
+  {% endif %}
+
+  {# Threaded Text Script #}
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      console.log("Threaded Text Engine Starting...");
+      const source = document.getElementById('source-text');
+      if (!source) {
+        console.error("Source text not found!");
+        return;
+      }
+      
+      const frames = document.querySelectorAll('.story-frame');
+      if (frames.length === 0) {
+        console.error("No story frames found!");
+        return;
+      }
+
+      console.log(`Found source text and ${frames.length} frames.`);
+
+      let currentFrameIndex = 0;
+      let currentFrame = frames[0];
+      
+      // Get all nodes (text, elements, comments)
+      const nodes = Array.from(source.childNodes);
+      
+      function fillFrames() {
+        if (!nodes.length) return;
+        
+        let nodeIndex = 0;
+        
+        while (nodeIndex < nodes.length) {
+          if (currentFrameIndex >= frames.length) {
+            console.warn("Ran out of frames! Text truncated.");
+            break;
+          }
+
+          currentFrame = frames[currentFrameIndex];
+          
+          // Get the node to move
+          let node = nodes[nodeIndex];
+          
+          // Skip empty text nodes (whitespace) to avoid infinite loops if they don't fit?
+          // No, whitespace is important.
+          
+          // Clone the node to test fit
+          let clone = node.cloneNode(true);
+          currentFrame.appendChild(clone);
+          
+          // Check for overflow
+          // We use a small buffer (1px) to avoid rounding errors
+          if (currentFrame.scrollHeight > currentFrame.clientHeight + 1) {
+            // Overflowed!
+            currentFrame.removeChild(clone);
+            
+            // If this is a text node, we should try to split it.
+            // For now, we just move the whole node to the next frame.
+            // This is "Block Threading".
+            
+            // Move to next frame
+            console.log(`Frame ${currentFrameIndex} full. Moving to Frame ${currentFrameIndex + 1}`);
+            currentFrameIndex++;
+            
+            // Do NOT increment nodeIndex, so we try to put this node in the next frame.
+          } else {
+            // Fits!
+            nodeIndex++;
+          }
+        }
+        console.log("Threading complete.");
+      }
+      
+      fillFrames();
+    });
+  </script>
+</section>

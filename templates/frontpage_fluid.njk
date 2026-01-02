@@ -1,0 +1,56 @@
+<section class="page page--frontpage page--fluid" data-page-id="{{ page.id }}">
+  <header class="masthead">
+    <div class="masthead__name">{{ page.masthead or title }}</div>
+    <div class="masthead__meta">
+      <span>{{ issue }}</span>
+      <span>{{ date }}</span>
+      {% if page.kicker %}<span>{{ page.kicker }}</span>{% endif %}
+    </div>
+  </header>
+
+  {# Main content wrapper spanning all columns #}
+  <div class="fluid-wrapper">
+    
+    {# The Sidebar (Briefs) - Floated Right #}
+    <aside class="fluid-sidebar">
+      <h2 class="section-title">Briefs</h2>
+      {% for b in page.briefs %}
+        <div class="brief">
+          <h3>{{ b.headline }}</h3>
+          <p>{{ b.body }}</p>
+        </div>
+      {% endfor %}
+    </aside>
+
+    {# The Main Story - Flows around the sidebar #}
+    <article class="fluid-story">
+      {% if page.lead %}
+        <h1 class="headline">{{ page.lead.headline }}</h1>
+        {% if page.lead.dek %}<p class="dek">{{ page.lead.dek }}</p>{% endif %}
+        {% if page.lead.byline %}<p class="byline">{{ page.lead.byline }}</p>{% endif %}
+        
+        {% if page.lead.image %}
+          <figure class="figure fluid-figure">
+            {% set img_src = page.lead.image.src %}
+            {% if img_src and (img_src.startsWith("http://") or img_src.startsWith("https://")) %}
+              <img src="{{ img_src }}" alt="" />
+            {% else %}
+              <img src="{{ img_src }}" alt="" />
+            {% endif %}
+            {% if page.lead.image.caption %}<figcaption>{{ page.lead.image.caption }}</figcaption>{% endif %}
+          </figure>
+        {% endif %}
+
+        <div class="body">
+          {# Repeat the body text to demonstrate wrapping #}
+          {% for i in range(0, 3) %}
+            {% for para in page.lead.body.split('\n\n') %}
+              <p>{{ para | safe }}</p>
+            {% endfor %}
+          {% endfor %}
+        </div>
+      {% endif %}
+    </article>
+
+  </div>
+</section>
