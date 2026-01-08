@@ -5,18 +5,41 @@ import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-// Parse arguments
+// Parse arguments manually to support both --arg=value and --arg value
 const args = process.argv.slice(2);
-const fileArg = args.find(a => a.startsWith('--file='));
-const scriptArg = args.find(a => a.startsWith('--script='));
+let scriptPath = null;
+let filePath = null;
 
-if (!scriptArg) {
-    console.error('Usage: node tools/run-id-script.mjs --script=<path> [--file=<path>]');
+for (let i = 0; i < args.length; i++) {
+    const arg = args[i];
+    
+    if (arg.startsWith('--script=')) {
+        scriptPath = arg.split('=')[1];
+    } else if (arg === '--script') {
+        if (i + 1 < args.length) {
+            scriptPath = args[i + 1];
+            i++; // Skip next arg
+        }
+    } else if (arg.startsWith('--file=')) {
+        filePath = arg.split('=')[1];
+    } else if (arg === '--file') {
+        if (i + 1 < args.length) {
+            filePath = args[i + 1];
+            i++; // Skip next arg
+        }
+    }
+}
+
+if (!scriptPath) {
+    console.error('Usage: node tools/run-id-script.mjs --script <path> [--file <path>]');
     process.exit(1);
 }
 
-const scriptPath = path.resolve(process.cwd(), scriptArg.split('=')[1]);
-const filePath = fileArg ? path.resolve(process.cwd(), fileArg.split('=')[1]) : null;
+// Resolve paths
+scriptPath = path.resolve(process.cwd(), scriptPath);
+if (filePath) {
+    filePath = path.resolve(process.cwd(), filePath);
+}
 
 if (!fs.existsSync(scriptPath)) {
     console.error(`Script not found: ${scriptPath}`);
@@ -37,15 +60,23 @@ tell application id "com.adobe.InDesign"
     activate
 `;
 
+let scriptArgs = "";
+
 if (filePath) {
     appleScript += `
     open POSIX file "${filePath}"
     `;
+    
+    // Pass the filename as an argument to the script
+    const fileName = path.basename(filePath);
+    scriptArgs = `with arguments {"${fileName}"}`;
 }
 
 appleScript += `
     set myScript to POSIX file "${scriptPath}"
-    do script myScript language javascript
+    with timeout of 600 seconds
+        do script myScript language javascript ${scriptArgs}
+    end timeout
 end tell
 `;
 
