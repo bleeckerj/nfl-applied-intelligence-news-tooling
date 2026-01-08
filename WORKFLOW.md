@@ -76,3 +76,57 @@ The script will:
 *   **"Dingbats" / Encoding Issues:** The scripts force UTF-8 encoding. If you see strange characters, ensure your editor is saving the JSON as UTF-8.
 *   **Missing Images:** Check the console output. If an image fails to download or isn't found locally, it will be skipped.
 *   **Text Overflow:** The `_layout-map.json` provides `estimated_words` and `estimated_chars` to help you write to fit.
+
+---
+
+## Workflow: Content Inventory & Audit
+
+While the workflow above handles **creation**, this workflow focuses on **extraction and auditing**. It allows you to pull content out of an existing InDesign file to verify text, check image paths, and audit reading order without needing to manually inspect every frame in InDesign.
+
+### The Tools
+
+1.  **`tools/extract-layout.sh`**: The main automation script.
+    *   **Purpose:** Orchestrates the extraction process. It first runs an InDesign script to dump raw data, then runs a Node.js script to structure it.
+    *   **Under the hood:**
+        *   Calls `tools/extract-content.jsx`: Runs inside InDesign. Crawls every page and text frame, exporting geometry (`[y1, x1, y2, x2]`), content, and styling info to a raw JSON file.
+        *   Calls `tools/structure-content.mjs`: Runs in Node.js. It takes the raw geometry and uses clustering algorithms to group disparate text frames into logical "Articles" or "Stories" based on their proximity and threading.
+
+2.  **`tools/viewer/index.html`**: The Inventory Viewer.
+    *   **Purpose:** A web-based tool to visualize the structured JSON. It provides a clean, "grey literature" list view of your newspaper content.
+    *   **Features:** Sorting (Reading Order vs. ID), Filtering (Images vs. Text), and one-click copying of content paths.
+
+### Step-by-Step Guide
+
+#### 1. Extract Content
+Run the extraction shell script on your InDesign document.
+
+```bash
+./tools/extract-layout.sh "path/to/your/issue.indd"
+```
+
+**What happens:**
+*   InDesign opens (in the background).
+*   A raw extraction file is created: `[filename]_extracted.json`.
+*   A final structured file is created: `[filename]_extracted_structured.json`.
+
+#### 2. Open the Viewer
+Launch the local web viewer.
+
+```bash
+./tools/open-viewer.sh
+```
+
+This will open your default browser to the viewer page.
+
+#### 3. Load & Audit
+1.  Click **"Choose File"** in the viewer.
+2.  Select the `_structured.json` file generated in Step 1.
+3.  Use the controls to audit your content:
+    *   **Sort Mode:**
+        *   **Reading Order:** Groups items by columns and vertical position to mimic how a human reads the page.
+        *   **Page & Vertical:** Strict top-to-bottom sorting.
+        *   **ID:** Sort by creation time (useful for finding newest additions).
+    *   **Filter:**
+        *   **Images Only:** verify all image paths are correct.
+        *   **Text Only:** Copy-paste headlines or body text for external editing/archiving.
+

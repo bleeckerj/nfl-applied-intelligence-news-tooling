@@ -507,10 +507,15 @@ You *could* embed the image data directly in the JSON string:
 
 We have added tools to support a "Reverse Workflow" where you design a template in InDesign first, export its structure, and use that to plan content.
 
+You can run these scripts directly from the command line using the `indesign:run` helper, which executes the ExtendScript within the running InDesign application.
+
 ### 1. Export Layout Map (`tools/export-layout-map.jsx`)
 *   **Role:** Analyzes an open InDesign document and exports a JSON map of all pages and items.
-*   **Usage:** Open your template/document in InDesign, run this script.
-*   **Output:** A JSON file containing:
+*   **Usage:**
+    ```bash
+    npm run indesign:run -- --file "path/to/my-document.indd" --script tools/export-layout-map.jsx
+    ```
+*   **Output:** A JSON file named `[docname]_layout-map.json` containing:
     *   Page dimensions and names.
     *   All page items (TextFrames, Rectangles).
     *   Item names, IDs, and geometric bounds.
@@ -519,13 +524,25 @@ We have added tools to support a "Reverse Workflow" where you design a template 
 
 ### 2. Create Flatplan (`tools/make-flatplan.jsx`)
 *   **Role:** Visualizes the "names" of your layout items directly on the page.
-*   **Usage:** 
-    1.  Open a **COPY** of your InDesign document (it overwrites content!).
-    2.  Run this script.
+*   **Usage:**
+    It is safest to run this on a **Template (`.indt`)**. InDesign opens templates as new "Untitled" documents, so your original file remains untouched.
+    ```bash
+    npm run indesign:run -- --file "path/to/my-template.indt" --script tools/make-flatplan.jsx
+    ```
+    *If you must run it on a `.indd` file, work on a COPY, as this script overwrites content.*
 *   **Action:**
     *   Iterates through all items.
     *   Assigns unique names (e.g., `TF_P1_1`) if they are unnamed.
     *   **Replaces the content** of text frames with their Name and Style (e.g., `TF_P1_1 (Headline)`).
     *   Adds label text frames on top of image frames.
+    *   Exports a PDF flatplan automatically.
 *   **Benefit:** You can print this "Flatplan" and use it to assign stories to specific box names in your content planning.
+
+### 3. Ingest Content (`tools/ingest-assignments.jsx`)
+*   **Role:** The reverse of the export. Takes an assignments JSON file and fills the InDesign layout.
+*   **Usage:**
+    ```bash
+    npm run indesign:run -- --file "path/to/my-document.indd" --script tools/ingest-assignments.jsx
+    ```
+    *(Note: This looks for `[docname]_assignments.json` in the same folder by default.)*
 

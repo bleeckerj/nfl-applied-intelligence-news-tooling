@@ -1,116 +1,84 @@
-# Newspaper-from-the-Future Compiler
+# NFL Futures in Print
 
-A template-driven newspaper layout system where structured content (JSON today, Markdown tomorrow) and images compile into a print-ready PDF via HTML/CSS paged media rendered by Vivliostyle.
+A publishing pipeline for creating "artifacts from the future" — specifically based on InDesign automation and templates. This system separates content creation (Markdown/JSON) from layout production, allowing for both rapid digital prototyping and high-fidelity print workflows.
 
-## Objectives
-- Make workshop-friendly newspapers with minimal setup and low cognitive load.
-- Provide semi-automated layout using fixed modules and copy budgets.
-- Generate repeatable, deterministic PDFs for print or digital distribution.
-- Keep the system easy to extend with new templates, modules, and validation.
+## 🚀 The Two Workflows
 
-## Success conditions
-- Given `content/issue.json` and images, running `npm run build` always produces the same `dist/issue.pdf`.
-- Participants can edit content without touching layout code.
-- Layout remains “good enough” for small printers (page size, margins, and safe areas respected).
-- New pages or modules can be added by editing JSON, templates, and CSS with clear extension points.
+This repository supports two distinct rendering engines depending on your fidelity needs:
 
-## Context of use
-- **Workshops:** participants author one story each; a facilitator compiles a full issue.
-- **Prototyping:** test structured storytelling formats without layout software.
-- **Repeatable publishing:** small-run newsletters or event zines with consistent layout rules.
+### 1. The Prototyping Engine (HTML/CSS)
+*   **Powered by:** Vivliostyle (CSS Paged Media).
+*   **Role:** Quick iteration, content testing, digital distribution.
+*   **How it works:** `content/issue.json` → Nunjucks Templates → CSS Grid → PDF.
+*   **Command:** `npm run preview` or `npm run build`
 
-## How it works
-```
-content/issue.json + images/ → build-html → dist/index.html → vivliostyle build → dist/issue.pdf
-```
+### 2. The Production Engine (InDesign Automation)
+*   **Powered by:** Adobe InDesign ExtendScript ("The Headless Newsroom").
+*   **Role:** Professional print production, robust text threading, CMYK color control.
+*   **How it works:**
+    *   **Reverse Workflow:** Analyze an InDesign template to create "assignments".
+    *   **Content:** Write stories in Markdown/JSON to fit those assignments.
+    *   **Ingest:** Scripts automatically pour text and images into the InDesign layout.
+*   **Documentation:**
+    *   [INDESIGN_AUTOMATION.md](INDESIGN_AUTOMATION.md): The architecture and concept.
+    *   [WORKFLOW.md](WORKFLOW.md): Step-by-step guide for editors and designers.
 
-## Requirements
-- Node.js 18+
-- npm
-- Vivliostyle CLI (`@vivliostyle/cli`)
+## 🛠️ Tools & Utilities
 
-## Quick start
-1) Install dependencies:
+### Content Inventory Viewer
+A "grey literature" style reading tool to audit, sort, and review content, whether it comes from a raw issue file or extracted from an existing InDesign layout.
 
-```bash
-npm install
-npm install -g @vivliostyle/cli
-```
+*   **Launch:** `./tools/open-viewer.sh`
+*   **Features:**
+    *   Sort by Reading Order, Page Geometry, or ID.
+    *   Filter view to "Images Only" (path auditing) or "Text Only" (copy auditing).
 
-2) Add an image at `images/hero.jpg` (or update the JSON to your file path).
+### CLI Reference
 
-3) Build the PDF:
+| Command | Description |
+| :--- | :--- |
+| **Vivliostyle** | |
+| `npm run preview` | Launch a browser preview of the HTML layout. |
+| `npm run build` | Compile the HTML layout to PDF (`dist/issue.pdf`). |
+| **InDesign** | *(Requires InDesign to be open)* |
+| `npm run indesign:run -- --script <path>` | Run a JSX script inside InDesign. |
+| `bundle:indesign` | Prepare local content for InDesign ingestion. |
 
-```bash
-npm run build
-```
+## 📦 Installation
 
-4) Open the output:
+1.  **System Requirements:**
+    *   Node.js 18+
+    *   Adobe InDesign (for Production workflow)
+    *   macOS (for InDesign scripting support via AppleScript)
 
-```
-dist/issue.pdf
-```
+2.  **Setup:**
+    ```bash
+    npm install
+    npm install -g @vivliostyle/cli
+    ```
 
-## Preview (fast iteration)
-```bash
-npm run preview
-```
+## 🏗️ Project Structure
 
-## Repository layout
 ```
 content/
-  issue.json         # structured content
-images/
-  hero.jpg           # images used by templates
-styles/
-  newspaper.css      # print CSS (paged media + grid)
+  issue.json           # Structured content source
+  ...                  # Markdown drafts
+images/                # Local assets
 templates/
-  issue.njk          # Nunjucks template → HTML
+  *.njk                # HTML templates (Vivliostyle)
+  *.indt               # InDesign Templates
 tools/
-  build-html.mjs     # JSON → HTML compile step
-dist/               # generated output
+  viewer/              # Inventory Viewer Web App
+  build-html.mjs       # JSON → HTML compiler
+  ingest-assignments.jsx # InDesign Import Script
+  export-layout-map.jsx  # InDesign Export Script
+dist/                  # Build outputs
 ```
 
-## Extending the system
-- **Add pages:** append another object to `pages[]` in `content/issue.json`.
-- **Add modules:** add new JSON keys and render them in templates; place them via CSS grid.
-- **Multiple templates:** select `page.template` and include the appropriate `.njk` file.
-- **Copy budgets:** add a validation step (e.g., Zod) to keep content within box limits.
-- **Overflow signals:** use fixed heights + `overflow: hidden;` to flag long copy.
+## Strategy for Implementation
 
-## Troubleshooting
-- **Vivliostyle not found:** run `npm install -g @vivliostyle/cli` and ensure your PATH includes global npm bin.
-- **Images missing:** check relative paths from `dist/index.html` to `images/...`.
-- **Font mismatch:** bundle webfonts via `@font-face` for consistent output.
+1.  **Design Template:** Create a robust InDesign template (`.indt`) with named boxes or logical flow.
+2.  **Map Layout:** Run `tools/export-layout-map.jsx` to generate a content budget.
+3.  **Draft Content:** Write stories to fit the budget (Visual Flatplans help here).
+4.  **Ingest & Refine:** Run `tools/ingest-assignments.jsx` to build the document, then manually fine-tune.
 
-## Strategy for implementation
-1) **Baseline pipeline**
-   - Keep `content/issue.json` as the single source of truth.
-   - Ensure `tools/build-html.mjs` cleanly renders to `dist/index.html`.
-   - Match `@page` size in CSS with Vivliostyle CLI `-s` settings.
-
-2) **Validation + copy budgets**
-   - Define a schema for JSON (Zod or JSON Schema).
-   - Enforce max characters/words per field; warn before build.
-   - Add a `tools/validate.mjs` step and wire into `npm run build`.
-
-3) **Template modularity**
-   - Split templates into `frontpage.njk`, `inside.njk`, `back.njk`.
-   - Allow per-page template selection in JSON.
-   - Extract reusable components (masthead, briefs, image block).
-
-4) **Content ingestion options**
-   - Add a “merge stories” script to assemble an issue from multiple JSON files.
-   - Prototype a lightweight web form that exports valid JSON.
-
-5) **Print readiness**
-   - Add printer-specific sizing presets and safe-area guidance.
-   - Evaluate crop marks/bleed settings with Vivliostyle flags.
-   - Add image preprocessing (size, DPI, aspect ratio).
-
-6) **Workshop ergonomics**
-   - Provide sample templates and content stubs.
-   - Document a facilitator flow for collecting content and building a full issue.
-
-## License
-Choose a license (MIT is common). Vivliostyle is open-source; review its license if embedding in a hosted product.
