@@ -136,6 +136,24 @@ function main() {
                             itemData.linkPath = "embedded-or-missing";
                         }
                     }
+                } else if (item instanceof Image || item instanceof EPS || item instanceof PDF || item instanceof WMF || item instanceof PICT || item instanceof Graphic) {
+                    // Handle placed graphics directly (not inside a Rectangle container)
+                    try {
+                        if (item.itemLink && item.itemLink.filePath) {
+                            itemData.linkPath = item.itemLink.filePath;
+                        }
+                    } catch(e) {
+                        itemData.linkPath = "embedded-or-missing";
+                    }
+                } else if (item instanceof GraphicLine) {
+                    // GraphicLine can also contain graphics
+                    if (item.allGraphics && item.allGraphics.length > 0) {
+                        try {
+                            itemData.linkPath = item.allGraphics[0].itemLink.filePath;
+                        } catch(e) {
+                            itemData.linkPath = "embedded-or-missing";
+                        }
+                    }
                 }
 
                 pageData.items.push(itemData);

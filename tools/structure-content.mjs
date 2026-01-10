@@ -172,7 +172,7 @@ const output = {
     })
 };
 
-const outputFilename = inputFile.replace(".json", "_structured.json");
+const outputFilename = inputFile.replace(/\.json$/, "_structured.json");
 fs.writeFileSync(outputFilename, JSON.stringify(output, null, 2));
 
 console.log(`Structured content saved to ${outputFilename}`);

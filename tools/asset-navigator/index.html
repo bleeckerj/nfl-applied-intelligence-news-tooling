@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InDesign Asset Navigator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1>Asset Navigator</h1>
+                <p class="subtitle">Visual content browser</p>
+            </div>
+            
+            <div class="file-controls">
+                <!-- URL input for direct loading -->
+                <div class="url-input-group">
+                    <input type="text" id="json-url" class="url-input" 
+                           placeholder="Enter JSON path (e.g., folder/file.json)">
+                    <button id="load-url-btn" class="url-load-btn">Load</button>
+                </div>
+                <div class="url-hint">or drag/drop file, or:</div>
+                
+                <label class="file-label">
+                    <span class="file-btn">📂 Browse for JSON</span>
+                    <input type="file" id="json-input" accept=".json" hidden>
+                </label>
+                <div id="json-name" class="file-status">No file loaded</div>
+                
+                <label class="file-label images-label">
+                    <span class="file-btn secondary">🖼️ Load Images Folder</span>
+                    <input type="file" id="images-input" webkitdirectory directory multiple hidden>
+                </label>
+                <div id="images-status" class="file-status small">Optional: Load folder to preview images</div>
+            </div>
+
+            <div class="page-nav" id="page-nav">
+                <button id="prev-page" class="nav-btn" disabled>◀</button>
+                <select id="page-select"></select>
+                <button id="next-page" class="nav-btn" disabled>▶</button>
+            </div>
+
+            <div class="legend">
+                <label class="legend-item toggle">
+                    <input type="checkbox" id="toggle-image" checked>
+                    <span class="legend-color image"></span> Image
+                </label>
+                <label class="legend-item toggle">
+                    <input type="checkbox" id="toggle-text" checked>
+                    <span class="legend-color text"></span> Text
+                </label>
+                <label class="legend-item toggle">
+                    <input type="checkbox" id="toggle-headline" checked>
+                    <span class="legend-color headline"></span> Headline
+                </label>
+            </div>
+
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="Search content...">
+            </div>
+
+            <!-- Details Panel -->
+            <div id="details-panel" class="details-panel">
+                <div class="details-empty">
+                    <p>Click any frame on the page to see its content</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Canvas Area -->
+        <main class="canvas-area" id="canvas-area">
+            <div class="page-view" id="page-view">
+                <div class="empty-state" id="empty-state">
+                    <h2>InDesign Asset Navigator</h2>
+                    <p>Drag & drop a <code>_structured.json</code> file here</p>
+                    <p class="hint">or enter a path above and click Load</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

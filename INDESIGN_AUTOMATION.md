@@ -91,7 +91,7 @@ function main() {
 
     // 2. Open Template
     // Update this path to your actual template location
-    var templatePath = "/Users/julian/Code/nfl-futures-in-print/templates/Newspaper_Template.indt";
+    var templatePath = "/Users/julian/Code/nfl-news-tooling/templates/Newspaper_Template.indt";
     var doc = app.open(File(templatePath));
 
     // 3. Layout Logic (Example for Front Page)
@@ -545,4 +545,3 @@ You can run these scripts directly from the command line using the `indesign:run
     npm run indesign:run -- --file "path/to/my-document.indd" --script tools/ingest-assignments.jsx
     ```
     *(Note: This looks for `[docname]_assignments.json` in the same folder by default.)*
-

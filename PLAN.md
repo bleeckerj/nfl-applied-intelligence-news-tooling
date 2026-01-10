@@ -5,7 +5,7 @@ Create a flexible, repeatable workflow that:
 - lets us choose from multiple templates/modules per issue,
 - declares required content slots up front,
 - supports mixed sources (generated drafts, curated drafts, hand-written),
-- compiles into print-ready JSON for `nfl-futures-in-print`.
+- compiles into print-ready JSON for `nfl-news-tooling`.
 
 ## Core Idea
 Introduce a middle artifact: **Issue Assembly JSON**.  
@@ -16,9 +16,9 @@ The assembly drives a **content needs report**, which then drives drafting and c
 
 ## Artifacts and Ownership
 - Drafting engine (source of drafts): `nfl-remember-the-future`
-- Layout compiler (source of templates/CSS): `nfl-futures-in-print`
-- Bridge artifact: `issue-assembly.json` (lives in `nfl-futures-in-print/content/`)
-- Final layout input: `content/issue.json` (lives in `nfl-futures-in-print/content/`)
+- Layout compiler (source of templates/CSS): `nfl-news-tooling`
+- Bridge artifact: `issue-assembly.json` (lives in `nfl-news-tooling/content/`)
+- Final layout input: `content/issue.json` (lives in `nfl-news-tooling/content/`)
 
 ## Inventory Model
 Maintain a library of **templates** and **modules**, grouped by content type:

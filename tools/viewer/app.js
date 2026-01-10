@@ -8,21 +8,7 @@ let currentData = null; // Store data for re-sorting
 
 fileInput.addEventListener('change', (e) => {
     const file = e.target.files[0];
-    if (!file) return;
-
-    fileNameDisplay.textContent = file.name;
-
-    const reader = new FileReader();
-    reader.onload = (event) => {
-        try {
-            const json = JSON.parse(event.target.result);
-            currentData = json;
-            renderInventory(); // Use global currentData
-        } catch (err) {
-            alert('Error parsing JSON: ' + err.message);
-        }
-    };
-    reader.readAsText(file);
+    if (file) handleFile(file);
 });
 
 // Re-render when options change
@@ -31,7 +17,7 @@ if (filterSelect) filterSelect.addEventListener('change', () => renderInventory(
 
 function renderInventory(data = null) {
     // If data passed, setting it (initial load logic from before was slightly different)
-    if (data) currentData = data;
+
     if (!currentData) return;
 
     listContainer.innerHTML = ''; // Clear current content
@@ -246,4 +232,60 @@ function getLeftX(article) {
     // But let's verify usage. In `getTopY` above: return article.frames[0].bounds ? article.frames[0].bounds[0] : 0;
     // Typically InDesign DOM bounds are [y1, x1, y2, x2]. So Top is 0, Left is 1.
     return article.frames[0].bounds ? article.frames[0].bounds[1] : 0;
+}
+
+// --- Drag and Drop Support ---
+
+const dropOverlay = document.getElementById('drop-zone-overlay');
+let dragCounter = 0;
+
+document.body.addEventListener('dragenter', (e) => {
+    e.preventDefault();
+    dragCounter++;
+    dropOverlay.classList.remove('hidden');
+});
+
+document.body.addEventListener('dragleave', (e) => {
+    e.preventDefault();
+    dragCounter--;
+    if (dragCounter <= 0) {
+        dropOverlay.classList.add('hidden');
+        dragCounter = 0;
+    }
+});
+
+document.body.addEventListener('dragover', (e) => {
+    e.preventDefault(); // Necessary to allow dropping
+});
+
+document.body.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropOverlay.classList.add('hidden');
+    dragCounter = 0;
+
+    const files = e.dataTransfer.files;
+    if (files.length > 0) {
+        handleFile(files[0]);
+    }
+});
+
+function handleFile(file) {
+    if (!file.name.endsWith('.json')) {
+        alert('Please drop a JSON file.');
+        return;
+    }
+
+    fileNameDisplay.textContent = file.name;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+        try {
+            const json = JSON.parse(event.target.result);
+            currentData = json;
+            renderInventory(); 
+        } catch (err) {
+            alert('Error parsing JSON: ' + err.message);
+        }
+    };
+    reader.readAsText(file);
 }

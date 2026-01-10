@@ -1,5 +1,5 @@
 {
-  "name": "nfl-futures-in-print",
+  "name": "nfl-news-tooling",
   "type": "module",
   "private": true,
   "dependencies": {
