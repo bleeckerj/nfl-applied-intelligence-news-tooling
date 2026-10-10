@@ -1,5 +1,7 @@
 # Implementation Plan: Inline Content Inserts (Callouts & Media)
 
+Legacy note: this plan targets the archived HTML/Vivliostyle prototype path. It is not part of the current production workflow.
+
 ## Objective
 Enable authors to insert rich, independent content blocks (callouts, images, sidebars) directly within the flow of a story's body text. These blocks can contain content unrelated to the immediate surrounding text (e.g., "Tip Line" info, Author Bio) and should support configurable layout options (column spanning, floating).
 

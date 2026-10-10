@@ -1,84 +1,106 @@
 # NFL Futures in Print
 
-A publishing pipeline for creating "artifacts from the future" — specifically based on InDesign automation and templates. This system separates content creation (Markdown/JSON) from layout production, allowing for both rapid digital prototyping and high-fidelity print workflows.
+A structured-data publishing pipeline for named-slot templates, backend-specific ingest/export, and print-ready PDF output.
 
-## 🚀 The Two Workflows
+## Current Status
 
-This repository supports two distinct rendering engines depending on your fidelity needs:
+- Adobe InDesign is the current production backend.
+- Assignment schema `2.0`, template manifests, and named-slot concepts are the stable interface.
+- The older HTML/CSS + Vivliostyle path is retained as a legacy prototype only and is not the current workflow.
 
-### 1. The Prototyping Engine (HTML/CSS)
-*   **Powered by:** Vivliostyle (CSS Paged Media).
-*   **Role:** Quick iteration, content testing, digital distribution.
-*   **How it works:** `content/issue.json` → Nunjucks Templates → CSS Grid → PDF.
-*   **Command:** `npm run preview` or `npm run build`
+## Canonical Production Workflow
 
-### 2. The Production Engine (InDesign Automation)
-*   **Powered by:** Adobe InDesign ExtendScript ("The Headless Newsroom").
-*   **Role:** Professional print production, robust text threading, CMYK color control.
-*   **How it works:**
-    *   **Reverse Workflow:** Analyze an InDesign template to create "assignments".
-    *   **Content:** Write stories in Markdown/JSON to fit those assignments.
-    *   **Ingest:** Scripts automatically pour text and images into the InDesign layout.
-*   **Documentation:**
-    *   [INDESIGN_AUTOMATION.md](INDESIGN_AUTOMATION.md): The architecture and concept.
-    *   [WORKFLOW.md](WORKFLOW.md): Step-by-step guide for editors and designers.
+1. Start with a named-slot print template (`.indt`/`.indd` today).
+2. Produce assignments in schema `2.0`.
+3. Run the backend-specific ingest step.
+4. Export a print-ready PDF.
 
-## 🛠️ Tools & Utilities
+This workflow currently supports:
 
-### Content Inventory Viewer
-A "grey literature" style reading tool to audit, sort, and review content, whether it comes from a raw issue file or extracted from an existing InDesign layout.
+- Newspaper templates, including backward compatibility for legacy assignment JSON.
+- Card templates for deck PDFs and imposed sheet PDFs.
 
-*   **Launch:** `./tools/open-viewer.sh`
-*   **Features:**
-    *   Sort by Reading Order, Page Geometry, or ID.
-    *   Filter view to "Images Only" (path auditing) or "Text Only" (copy auditing).
+## Production Commands
 
-### CLI Reference
-
-| Command | Description |
+| Command | Purpose |
 | :--- | :--- |
-| **Vivliostyle** | |
-| `npm run preview` | Launch a browser preview of the HTML layout. |
-| `npm run build` | Compile the HTML layout to PDF (`dist/issue.pdf`). |
-| **InDesign** | *(Requires InDesign to be open)* |
-| `npm run indesign:run -- --script <path>` | Run a JSX script inside InDesign. |
-| `bundle:indesign` | Prepare local content for InDesign ingestion. |
+| `npm run assignments:compile -- ...` | Compile card deck JSON + template manifest into assignments v2.0. |
+| `npm run assignments:migrate -- ...` | Convert legacy assignments to v2.0. |
+| `npm run print:build -- ...` | Compile assignments if needed, ingest into the current backend, and export PDF. |
+| `npm run print:validate -- ...` | Validate manifests and assignment docs. |
+| `npm run indesign:run -- ...` | Run JSX scripts in Adobe InDesign from the terminal. |
+| `npm run images:fullres -- ...` | Copy full-resolution linked image assets from a structured InDesign extraction JSON. |
+| `npm run bundle:indesign -- ...` | Bundle issue JSON for the older newspaper-to-InDesign bridge flow. |
 
-## 📦 Installation
+## Legacy Prototype Commands
 
-1.  **System Requirements:**
-    *   Node.js 18+
-    *   Adobe InDesign (for Production workflow)
-    *   macOS (for InDesign scripting support via AppleScript)
+These commands are kept for archival/reference use only. They are not part of the production workflow.
 
-2.  **Setup:**
-    ```bash
-    npm install
-    npm install -g @vivliostyle/cli
-    ```
+| Command | Purpose |
+| :--- | :--- |
+| `npm run legacy:html:build` | Render the archived HTML prototype. |
+| `npm run legacy:html:pdf` | Build the archived Vivliostyle PDF prototype. |
+| `npm run legacy:html:preview` | Preview the archived Vivliostyle prototype. |
+| `npm run legacy:grid:html` | Build the archived grid prototype HTML. |
+| `npm run legacy:grid:pdf` | Build the archived grid prototype PDF. |
 
-## 🏗️ Project Structure
+## Installation
 
-```
-content/
-  issue.json           # Structured content source
-  ...                  # Markdown drafts
-images/                # Local assets
-templates/
-  *.njk                # HTML templates (Vivliostyle)
-  *.indt               # InDesign Templates
-tools/
-  viewer/              # Inventory Viewer Web App
-  build-html.mjs       # JSON → HTML compiler
-  ingest-assignments.jsx # InDesign Import Script
-  export-layout-map.jsx  # InDesign Export Script
-dist/                  # Build outputs
+```bash
+npm install
 ```
 
-## Strategy for Implementation
+Production automation currently assumes:
 
-1.  **Design Template:** Create a robust InDesign template (`.indt`) with named boxes or logical flow.
-2.  **Map Layout:** Run `tools/export-layout-map.jsx` to generate a content budget.
-3.  **Draft Content:** Write stories to fit the budget (Visual Flatplans help here).
-4.  **Ingest & Refine:** Run `tools/ingest-assignments.jsx` to build the document, then manually fine-tune.
+- Adobe InDesign
+- macOS, because `tools/run-id-script.mjs` drives InDesign via AppleScript
 
+Vivliostyle is no longer a normal install requirement. It remains an optional dependency for the archived prototype scripts only.
+
+## Backend Strategy
+
+- `indesign` is the current production backend.
+- `quark` is the next tool family to evaluate if InDesign is replaced.
+- Future backends should consume the existing assignment/template contract rather than redefine the repo around a tool-specific data model.
+
+See:
+
+- [tools/README.md](tools/README.md)
+- [docs/decisions/0001-affinity-publisher-not-selected.md](docs/decisions/0001-affinity-publisher-not-selected.md)
+- [docs/quarkxpress-feasibility-spike.md](docs/quarkxpress-feasibility-spike.md)
+
+## Recovering Full-Resolution Images
+
+If you have an InDesign extraction JSON and only see thumbnails in a sibling folder, use the structured JSON to copy the original linked assets at full resolution:
+
+```bash
+npm run images:fullres -- path/to/issue_extracted_structured.json
+```
+
+By default this writes to a sibling `full-resolution/` folder next to the JSON, which keeps it adjacent to the existing `thumbnails/` folder when present.
+
+## Project Layout
+
+```text
+content/                  # source content and assembly artifacts
+templates/                # print manifests plus archived HTML prototype templates
+tools/                    # production automation scripts and archived prototype tools
+styles/                   # archived HTML prototype CSS and fonts
+dist/                     # generated outputs
+tests/                    # validation and compiler tests
+docs/                     # decisions and evaluation notes
+```
+
+## Repo Boundary
+
+- `nfl-news-tooling` contains the tooling code, validators, ingest/export logic, and backend evaluation docs.
+- `nfl-agi-wars` contains card data, card templates (`.indt`), and card manifests.
+- Typical usage: run commands from `nfl-news-tooling`, but pass absolute paths to assets in `nfl-agi-wars`.
+
+## Notes
+
+- Strict named slots are the default for production ingest.
+- `tools/build-newspaper.jsx` is legacy/non-canonical.
+- Image paths and image URLs are both supported by the production ingest pipeline.
+- Optional card-back payloads are supported for future recto/verso expansion.
+- Affinity Publisher is not the current replacement target because it remains automation-insufficient for this repo's structured-data-first workflow.

@@ -16,7 +16,7 @@ The assembly drives a **content needs report**, which then drives drafting and c
 
 ## Artifacts and Ownership
 - Drafting engine (source of drafts): `nfl-remember-the-future`
-- Layout compiler (source of templates/CSS): `nfl-news-tooling`
+- Print layout backend adapter: `nfl-news-tooling`
 - Bridge artifact: `issue-assembly.json` (lives in `nfl-news-tooling/content/`)
 - Final layout input: `content/issue.json` (lives in `nfl-news-tooling/content/`)
 
@@ -97,7 +97,7 @@ Maintain a simple mapping file (or embed in `issue-assembly.json`):
 3) **Draft + curate** using `nfl-remember-the-future`
 4) **Map drafts to slots** (assignment file or inline)
 5) **Export to print JSON** (`content/issue.json`)
-6) **Compile** via `npm run build`
+6) **Compile** via the current production backend, e.g. `npm run print:build -- ...`
 
 ## Open Decisions (Resolved)
 - `issue-assembly.json` lives in a **shared** location.
@@ -147,4 +147,4 @@ Maintain a simple mapping file (or embed in `issue-assembly.json`):
   - Generated `content/issue.json` matches expected shape for templates.
   - Copy budget warnings are emitted when limits are exceeded.
 - **Smoke build**
-  - `npm run build` succeeds using exported `content/issue.json`.
+  - `npm run print:build -- ...` succeeds using exported assignment data and the current production backend.
