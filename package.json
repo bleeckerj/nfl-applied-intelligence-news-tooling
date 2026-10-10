@@ -6,15 +6,27 @@
     "nunjucks": "^3.2.4"
   },
   "scripts": {
-    "build:html": "node tools/build-html.mjs",
-    "build:pdf": "npm run build:html && npx vivliostyle build dist/index.html -o dist/issue.pdf -s \"289mm,380mm\"",
-    "build": "npm run build:pdf",
-    "preview": "npm run build:html && npx vivliostyle preview dist/index.html",
-    "preview:html": "npm run build:html",
-    "grid:html": "node tools/build-grid.mjs",
-    "grid:pdf": "node tools/make-grid-pdf.mjs",
-    "bundle:indesign": "node tools/bundle-for-indesign.js",
-    "indesign:run": "node tools/run-id-script.mjs"
+    "export:editorial": "node tools/export-editorial-articles.mjs",
+    "bundle:indesign": "node tools/bundle-for-indesign.mjs",
+    "indesign:run": "node tools/run-id-script.mjs",
+    "images:fullres": "node tools/extract-full-resolution-images.mjs",
+    "assignments:migrate": "node tools/migrate-assignments.mjs",
+    "assignments:compile": "node tools/compile-print-assignments.mjs",
+    "print:build": "node tools/build-print-pdf.mjs",
+    "print:validate": "node tools/validate-print-schemas.mjs",
+    "legacy:html:build": "node tools/build-html.mjs",
+    "legacy:html:pdf": "npm run legacy:html:build && npx vivliostyle build dist/index.html -o dist/issue.pdf -s \"289mm,380mm\"",
+    "legacy:html:preview": "npm run legacy:html:build && npx vivliostyle preview dist/index.html",
+    "legacy:grid:html": "node tools/build-grid.mjs",
+    "legacy:grid:pdf": "node tools/make-grid-pdf.mjs",
+    "build:html": "npm run legacy:html:build",
+    "build:pdf": "npm run legacy:html:pdf",
+    "build": "npm run legacy:html:pdf",
+    "preview": "npm run legacy:html:preview",
+    "preview:html": "npm run legacy:html:build",
+    "grid:html": "npm run legacy:grid:html",
+    "grid:pdf": "npm run legacy:grid:pdf",
+    "test": "node --test tests/*.test.mjs"
   },
   "devDependencies": {
     "@vivliostyle/cli": "^10.2.0"

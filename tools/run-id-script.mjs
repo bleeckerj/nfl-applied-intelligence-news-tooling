@@ -1,98 +1,167 @@
-import { exec } from 'child_process';
-import path from 'path';
-import fs from 'fs';
-import { fileURLToPath } from 'url';
+import { spawn } from "node:child_process";
+import path from "node:path";
+import fs from "node:fs";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+function parseArgs(argv) {
+  const parsed = {
+    scriptPath: null,
+    filePath: null,
+    scriptArgs: [],
+    includeFileBasenameArg: true,
+    timeoutSeconds: 600,
+  };
 
-// Parse arguments manually to support both --arg=value and --arg value
-const args = process.argv.slice(2);
-let scriptPath = null;
-let filePath = null;
+  for (let index = 0; index < argv.length; index += 1) {
+    const arg = argv[index];
 
-for (let i = 0; i < args.length; i++) {
-    const arg = args[i];
-    
-    if (arg.startsWith('--script=')) {
-        scriptPath = arg.split('=')[1];
-    } else if (arg === '--script') {
-        if (i + 1 < args.length) {
-            scriptPath = args[i + 1];
-            i++; // Skip next arg
-        }
-    } else if (arg.startsWith('--file=')) {
-        filePath = arg.split('=')[1];
-    } else if (arg === '--file') {
-        if (i + 1 < args.length) {
-            filePath = args[i + 1];
-            i++; // Skip next arg
-        }
+    if (arg.startsWith("--script=")) {
+      parsed.scriptPath = arg.slice("--script=".length);
+    } else if (arg === "--script") {
+      parsed.scriptPath = argv[++index];
+    } else if (arg.startsWith("--file=")) {
+      parsed.filePath = arg.slice("--file=".length);
+    } else if (arg === "--file") {
+      parsed.filePath = argv[++index];
+    } else if (arg.startsWith("--arg=")) {
+      parsed.scriptArgs.push(arg.slice("--arg=".length));
+    } else if (arg === "--arg") {
+      parsed.scriptArgs.push(argv[++index]);
+    } else if (arg === "--no-file-basename-arg") {
+      parsed.includeFileBasenameArg = false;
+    } else if (arg === "--timeout") {
+      parsed.timeoutSeconds = Number(argv[++index] || 600);
+    } else if (arg === "--help" || arg === "-h") {
+      parsed.help = true;
     }
+  }
+
+  return parsed;
 }
 
-if (!scriptPath) {
-    console.error('Usage: node tools/run-id-script.mjs --script <path> [--file <path>]');
-    process.exit(1);
+function printUsage() {
+  console.log(`Usage: node tools/run-id-script.mjs --script <path> [--file <path>] [--arg <value> ...]
+
+Options:
+  --script <path>                JSX script to run inside InDesign (required)
+  --file <path>                  Optional document/template to open first
+  --arg <value>                  Additional argument passed to JSX (repeatable)
+  --no-file-basename-arg         Do not prepend opened filename to JSX args
+  --timeout <seconds>            Script execution timeout (default: 600)
+`);
 }
 
-// Resolve paths
-scriptPath = path.resolve(process.cwd(), scriptPath);
-if (filePath) {
-    filePath = path.resolve(process.cwd(), filePath);
+function resolveExistingPath(value, label) {
+  const resolved = path.resolve(process.cwd(), value);
+  if (!fs.existsSync(resolved)) {
+    throw new Error(`${label} not found: ${resolved}`);
+  }
+  return resolved;
 }
 
-if (!fs.existsSync(scriptPath)) {
-    console.error(`Script not found: ${scriptPath}`);
-    process.exit(1);
+function escapeAppleScriptString(value) {
+  return String(value).replace(/\\/g, "\\\\").replace(/"/g, '\\"');
 }
 
-if (filePath && !fs.existsSync(filePath)) {
-    console.error(`File not found: ${filePath}`);
-    process.exit(1);
+function buildAppleScript({ scriptPath, filePath, args, timeoutSeconds }) {
+  const escapedScriptPath = escapeAppleScriptString(scriptPath);
+  const hasFile = Boolean(filePath);
+  const escapedFilePath = hasFile ? escapeAppleScriptString(filePath) : "";
+
+  const escapedArgs = args.map((arg) => `"${escapeAppleScriptString(arg)}"`);
+  const argClause = escapedArgs.length > 0 ? ` with arguments {${escapedArgs.join(", ")}}` : "";
+
+  const lines = [
+    'tell application id "com.adobe.InDesign"',
+    "    activate",
+  ];
+
+  if (hasFile) {
+    lines.push(`    open POSIX file \"${escapedFilePath}\"`);
+  }
+
+  lines.push(`    set myScript to POSIX file \"${escapedScriptPath}\"`);
+  lines.push(`    with timeout of ${Math.max(1, Number(timeoutSeconds) || 600)} seconds`);
+  lines.push(`        do script myScript language javascript${argClause}`);
+  lines.push("    end timeout");
+  lines.push("end tell");
+
+  return lines.join("\n");
 }
 
-console.log(`Script: ${scriptPath}`);
-if (filePath) console.log(`Target File: ${filePath}`);
+function runAppleScript(scriptText) {
+  return new Promise((resolve, reject) => {
+    const child = spawn("osascript", ["-e", scriptText], {
+      stdio: ["ignore", "pipe", "pipe"],
+    });
 
-// Construct AppleScript
-let appleScript = `
-tell application id "com.adobe.InDesign"
-    activate
-`;
+    let stdout = "";
+    let stderr = "";
 
-let scriptArgs = "";
+    child.stdout.on("data", (chunk) => {
+      stdout += chunk.toString();
+    });
 
-if (filePath) {
-    appleScript += `
-    open POSIX file "${filePath}"
-    `;
-    
-    // Pass the filename as an argument to the script
-    const fileName = path.basename(filePath);
-    scriptArgs = `with arguments {"${fileName}"}`;
+    child.stderr.on("data", (chunk) => {
+      stderr += chunk.toString();
+    });
+
+    child.on("close", (code) => {
+      if (code === 0) {
+        resolve({ stdout, stderr });
+      } else {
+        reject(new Error(stderr || `osascript failed with exit code ${code}`));
+      }
+    });
+  });
 }
 
-appleScript += `
-    set myScript to POSIX file "${scriptPath}"
-    with timeout of 600 seconds
-        do script myScript language javascript ${scriptArgs}
-    end timeout
-end tell
-`;
+async function main() {
+  const parsed = parseArgs(process.argv.slice(2));
 
-// Execute AppleScript
-const command = `osascript -e '${appleScript}'`;
+  if (parsed.help) {
+    printUsage();
+    return;
+  }
 
-console.log('Sending command to InDesign...');
+  if (!parsed.scriptPath) {
+    printUsage();
+    throw new Error("--script is required.");
+  }
 
-exec(command, (error, stdout, stderr) => {
-    if (error) {
-        console.error(`Error: ${error.message}`);
-        return;
-    }
-    if (stderr) {
-        console.error(`Stderr: ${stderr}`);
-        return;
-    }
-    console.log('Script executed successfully.');
+  const scriptPath = resolveExistingPath(parsed.scriptPath, "Script");
+  const filePath = parsed.filePath ? resolveExistingPath(parsed.filePath, "File") : null;
+
+  const args = [];
+  if (filePath && parsed.includeFileBasenameArg) {
+    args.push(path.basename(filePath));
+  }
+  args.push(...parsed.scriptArgs.filter((arg) => arg !== undefined));
+
+  const appleScript = buildAppleScript({
+    scriptPath,
+    filePath,
+    args,
+    timeoutSeconds: parsed.timeoutSeconds,
+  });
+
+  console.log(`Script: ${scriptPath}`);
+  if (filePath) console.log(`Target File: ${filePath}`);
+  if (args.length > 0) console.log(`Script Args: ${args.join(", ")}`);
+  console.log("Sending command to InDesign...");
+
+  const { stdout, stderr } = await runAppleScript(appleScript);
+
+  if (stdout && stdout.trim()) {
+    console.log(stdout.trim());
+  }
+  if (stderr && stderr.trim()) {
+    console.error(stderr.trim());
+  }
+
+  console.log("Script executed successfully.");
+}
+
+main().catch((error) => {
+  console.error(error.message);
+  process.exit(1);
 });

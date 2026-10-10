@@ -1,5 +1,403 @@
 // tools/ingest-assignments.jsx
-// Run this script from Adobe InDesign to populate the template with content from an assignments JSON file.
+// Canonical InDesign ingestion script for assignment schema v2.0.
+// Includes adapter support for legacy pages[].assignments format.
+
+function isObject(value) {
+    return value && typeof value === "object" && !(value instanceof Array);
+}
+
+function firstJsonArg(args) {
+    for (var i = 0; i < args.length; i++) {
+        if (String(args[i]).match(/\.json$/i)) {
+            return String(args[i]);
+        }
+    }
+    return null;
+}
+
+function hasArg(args, key) {
+    var marker = key + "=";
+    for (var i = 0; i < args.length; i++) {
+        var value = String(args[i]);
+        if (value === key || value === marker + "true") {
+            return true;
+        }
+        if (value === marker + "false") {
+            return false;
+        }
+    }
+    return null;
+}
+
+function adaptLegacyAssignments(input) {
+    var pages = [];
+
+    for (var i = 0; i < input.pages.length; i++) {
+        var legacyPage = input.pages[i];
+        var assignments = legacyPage.assignments || {};
+        var slots = [];
+
+        for (var name in assignments) {
+            if (!assignments.hasOwnProperty(name)) continue;
+
+            var item = assignments[name] || {};
+            if (item.src || item.image_path) {
+                slots.push({
+                    name: name,
+                    kind: "image",
+                    src: item.src || item.image_path,
+                    caption: item.caption,
+                    fit: item.fit || "fill_proportionally"
+                });
+            } else {
+                slots.push({
+                    name: name,
+                    kind: "text",
+                    text: (item.content !== undefined) ? String(item.content) : "",
+                    style: item.style
+                });
+            }
+        }
+
+        pages.push({
+            id: legacyPage.id || legacyPage.name || ("p" + (i + 1)),
+            slots: slots
+        });
+    }
+
+    return {
+        schema_version: "2.0",
+        artifact_type: "newspaper",
+        template_id: (input.metadata && (input.metadata.templateName || input.metadata.documentName)) || "legacy_template",
+        output_mode: "deck",
+        metadata: {
+            adapted_from_legacy: true,
+            source_generated_at: input.metadata ? input.metadata.generatedAt : ""
+        },
+        pages: pages
+    };
+}
+
+function parseAssignmentData(raw) {
+    if (!isObject(raw)) {
+        throw new Error("Assignment JSON must be an object.");
+    }
+
+    if (raw.schema_version === "2.0") {
+        return raw;
+    }
+
+    if (raw.pages && raw.pages.length > 0 && raw.pages[0].assignments) {
+        return adaptLegacyAssignments(raw);
+    }
+
+    throw new Error("Unsupported assignment format. Expected schema v2.0 or legacy pages[].assignments.");
+}
+
+function findAssignmentFile(doc, args) {
+    var explicitJsonPath = firstJsonArg(args);
+    if (explicitJsonPath) {
+        var explicitFile = new File(explicitJsonPath);
+        if (explicitFile.exists) return explicitFile;
+    }
+
+    var projectRoot = new File($.fileName).parent.parent;
+
+    var baseName = doc.name.replace(/\.[^\.]+$/, "");
+    var rootCandidate = new File(projectRoot.fsName + "/" + baseName + "_assignments.json");
+    if (rootCandidate.exists) return rootCandidate;
+
+    try {
+        if (doc.saved) {
+            var localCandidate = new File(doc.filePath.fsName + "/" + baseName + "_assignments.json");
+            if (localCandidate.exists) return localCandidate;
+        }
+    } catch (e) {}
+
+    return File.openDialog("Select the Assignments JSON file", "*.json");
+}
+
+function readJsonFile(file) {
+    file.open("r");
+    file.encoding = "UTF-8";
+    var content = file.read();
+    file.close();
+
+    try {
+        return eval("(" + content + ")");
+    } catch (e) {
+        throw new Error("Error parsing JSON: " + e);
+    }
+}
+
+function normalizePageName(id) {
+    if (!id) return "";
+    var raw = String(id);
+    var match = raw.match(/^p(\d+)$/i);
+    if (match) return match[1];
+    return raw;
+}
+
+function findPage(doc, pageData, fallbackIndex, allowCreate, duplicateFromFirstPage) {
+    var pageName = normalizePageName(pageData.id || pageData.name || "");
+
+    if (pageName) {
+        try {
+            var byName = doc.pages.itemByName(pageName);
+            if (byName && byName.isValid) return byName;
+        } catch (e) {}
+    }
+
+    if (pageData.index !== undefined && pageData.index !== null) {
+        var explicitIndex = parseInt(pageData.index, 10);
+        if (!isNaN(explicitIndex) && explicitIndex >= 0 && explicitIndex < doc.pages.length) {
+            return doc.pages[explicitIndex];
+        }
+    }
+
+    if (fallbackIndex >= 0) {
+        if (fallbackIndex < doc.pages.length) {
+            return doc.pages[fallbackIndex];
+        }
+
+        if (allowCreate) {
+            while (doc.pages.length <= fallbackIndex) {
+                if (duplicateFromFirstPage && doc.pages.length > 0) {
+                    doc.pages[0].duplicate(LocationOptions.AT_END);
+                } else {
+                    doc.pages.add(LocationOptions.AT_END);
+                }
+            }
+            return doc.pages[fallbackIndex];
+        }
+    }
+
+    return null;
+}
+
+function findItemOnPage(page, slotName) {
+    var item = page.pageItems.itemByName(slotName);
+    if (item && item.isValid) return item;
+    return null;
+}
+
+function findItemsByNameOnPage(page, slotName) {
+    var matches = [];
+    try {
+        var all = page.allPageItems;
+        for (var i = 0; i < all.length; i++) {
+            var item = all[i];
+            if (!item || !item.isValid) continue;
+            if (item.name === slotName) matches.push(item);
+        }
+    } catch (e) {}
+    return matches;
+}
+
+function getItemTypeName(item) {
+    try {
+        if (item && item.constructor && item.constructor.name) return item.constructor.name;
+    } catch (e) {}
+    return "Unknown";
+}
+
+function isTextLike(item) {
+    if (!item || !item.isValid) return false;
+    try {
+        // TextFrame is the common case; TextPath and other text containers expose "contents".
+        if (item instanceof TextFrame) return true;
+    } catch (e) {}
+
+    try {
+        if (typeof item.contents !== "undefined" && typeof item.parentStory !== "undefined") {
+            return true;
+        }
+    } catch (e2) {}
+
+    return false;
+}
+
+function findDescendantTextLike(item) {
+    if (!item || !item.isValid) return null;
+    if (isTextLike(item)) return item;
+
+    try {
+        var children = item.allPageItems;
+        if (children && children.length > 0) {
+            for (var i = 0; i < children.length; i++) {
+                var child = children[i];
+                if (!child || !child.isValid) continue;
+                if (isTextLike(child)) return child;
+
+                var nested = findDescendantTextLike(child);
+                if (nested) return nested;
+            }
+        }
+    } catch (e) {}
+
+    return null;
+}
+
+function findDescendantGraphicFrame(item) {
+    if (!item || !item.isValid) return null;
+    try {
+        if (item instanceof Rectangle || item instanceof Oval || item instanceof Polygon) return item;
+    } catch (e) {}
+
+    try {
+        var children = item.allPageItems;
+        if (children && children.length > 0) {
+            for (var i = 0; i < children.length; i++) {
+                var child = children[i];
+                if (!child || !child.isValid) continue;
+                try {
+                    if (child instanceof Rectangle || child instanceof Oval || child instanceof Polygon) return child;
+                } catch (e2) {}
+
+                var nested = findDescendantGraphicFrame(child);
+                if (nested) return nested;
+            }
+        }
+    } catch (e3) {}
+
+    return null;
+}
+
+function resolveTextTarget(item) {
+    return findDescendantTextLike(item);
+}
+
+function resolveImageTarget(item) {
+    return findDescendantGraphicFrame(item);
+}
+
+function resolveImageFile(src, assignmentRootFolder) {
+    if (!src) return null;
+
+    if (src.indexOf("http://") === 0 || src.indexOf("https://") === 0) {
+        try {
+            var filename = src.split("/").pop().split("?")[0];
+            if (!filename) filename = "downloaded-image.jpg";
+
+            var targetPath = Folder.temp.fsName + "/" + new Date().getTime() + "_" + filename;
+            var curlCmd = "curl -L -s '" + src + "' -o '" + targetPath + "'";
+            var appleScript = 'do shell script "' + curlCmd + '"';
+            app.doScript(appleScript, ScriptLanguage.APPLESCRIPT_LANGUAGE);
+
+            var downloaded = new File(targetPath);
+            if (downloaded.exists) return downloaded;
+            return null;
+        } catch (e) {
+            return null;
+        }
+    }
+
+    var absolute = new File(src);
+    if (absolute.exists) return absolute;
+
+    var relative = new File(assignmentRootFolder.fsName + "/" + src);
+    if (relative.exists) return relative;
+
+    return null;
+}
+
+function applyTextSlot(item, slot, doc, warnings) {
+    var target = resolveTextTarget(item);
+    if (!target) {
+        warnings.push("Slot " + slot.name + " is text, but resolved item type is " + getItemTypeName(item) + " (no text container found).");
+        return;
+    }
+
+    target.contents = (slot.text !== undefined && slot.text !== null) ? String(slot.text) : "";
+
+    if (slot.style) {
+        try {
+            var style = doc.paragraphStyles.itemByName(slot.style);
+            if (style && style.isValid) {
+                target.paragraphs.everyItem().applyParagraphStyle(style, true);
+            } else {
+                warnings.push("Paragraph style not found: " + slot.style + " (slot " + slot.name + ")");
+            }
+        } catch (e) {
+            warnings.push("Failed applying style " + slot.style + " to slot " + slot.name + ": " + e);
+        }
+    }
+}
+
+function applyImageFit(item, fitSetting) {
+    var fit = (fitSetting || "fill_proportionally").toLowerCase();
+
+    try {
+        if (fit === "content_to_frame") {
+            item.fit(FitOptions.CONTENT_TO_FRAME);
+        } else if (fit === "proportionally") {
+            item.fit(FitOptions.PROPORTIONALLY);
+            item.fit(FitOptions.CENTER_CONTENT);
+        } else if (fit === "center_content") {
+            item.fit(FitOptions.CENTER_CONTENT);
+        } else {
+            item.fit(FitOptions.FILL_PROPORTIONALLY);
+            item.fit(FitOptions.CENTER_CONTENT);
+        }
+    } catch (e) {}
+}
+
+function applyImageSlot(item, slot, assignmentRootFolder, warnings) {
+    var target = resolveImageTarget(item);
+    if (!target) {
+        warnings.push("Slot " + slot.name + " is image, but frame is not a graphic frame.");
+        return;
+    }
+
+    if (!slot.src || slot.src === "images/placeholder.jpg") {
+        if (slot.required) {
+            warnings.push("Required image slot missing source: " + slot.name);
+        }
+        return;
+    }
+
+    var fileToPlace = resolveImageFile(slot.src, assignmentRootFolder);
+    if (!fileToPlace || !fileToPlace.exists) {
+        warnings.push("Image not found for slot " + slot.name + ": " + slot.src);
+        return;
+    }
+
+    try {
+        target.place(fileToPlace);
+        applyImageFit(target, slot.fit);
+    } catch (e) {
+        warnings.push("Failed to place image for slot " + slot.name + ": " + e);
+    }
+}
+
+function applySlot(item, slot, doc, assignmentRootFolder, warnings) {
+    if (slot.kind === "text") {
+        applyTextSlot(item, slot, doc, warnings);
+        return;
+    }
+
+    if (slot.kind === "image") {
+        applyImageSlot(item, slot, assignmentRootFolder, warnings);
+        return;
+    }
+
+    warnings.push("Unknown slot kind for " + slot.name + ": " + slot.kind);
+}
+
+function resolveItemForSlot(page, slot) {
+    var namedItems = findItemsByNameOnPage(page, slot.name);
+    if (namedItems.length === 0) return null;
+
+    // Prefer a direct type match to avoid itemByName returning an unrelated object with same name.
+    for (var i = 0; i < namedItems.length; i++) {
+        var candidate = namedItems[i];
+        if (slot.kind === "text" && resolveTextTarget(candidate)) return candidate;
+        if (slot.kind === "image" && resolveImageTarget(candidate)) return candidate;
+    }
+
+    // Fallback to first named item.
+    return namedItems[0];
+}
 
 function main(args) {
     if (app.documents.length === 0) {
@@ -8,220 +406,79 @@ function main(args) {
     }
 
     var doc = app.activeDocument;
-    
-    // 1. Select Assignments File
-    var assignmentFile;
-    var projectRoot = new File($.fileName).parent.parent; // Script is in tools/, so parent.parent is root
+    var strictFlag = hasArg(args, "strict");
+    var strict = (strictFlag === null) ? true : Boolean(strictFlag);
 
-    // Handle arguments
-    // args[0] might be the document filename (e.g. "doc.indt") passed by the runner
-    // or it might be the assignments file if the user passed it explicitly (though our runner passes doc name first)
-    
-    var potentialName = "";
-    if (args && args.length > 0) {
-        var arg = args[0];
-        if (arg.match(/\.json$/i)) {
-            // It's a JSON file
-            assignmentFile = new File(arg);
-            if (!assignmentFile.exists) {
-                // Try relative to project root
-                assignmentFile = new File(projectRoot.fsName + "/" + arg);
-            }
-        } else {
-            // It's likely the document name (e.g. "ai-newspaper.indt")
-            // Construct the expected JSON name
-            potentialName = arg.replace(/\.[^\.]+$/, "");
-        }
-    }
+    var assignmentFile = findAssignmentFile(doc, args);
+    if (!assignmentFile) return;
 
-    // If we haven't found it yet, try the potential name in the project root
-    if ((!assignmentFile || !assignmentFile.exists) && potentialName) {
-        var candidate = new File(projectRoot.fsName + "/" + potentialName + "_assignments.json");
-        if (candidate.exists) {
-            assignmentFile = candidate;
-        }
-    }
+    var rawData = readJsonFile(assignmentFile);
+    var data = parseAssignmentData(rawData);
 
-    // Fallback: Try to find based on the active document name (if it's saved)
-    if (!assignmentFile || !assignmentFile.exists) {
-        try {
-            if (doc.saved) {
-                var docName = doc.name.replace(/\.[^\.]+$/, "");
-                var path = doc.filePath + "/" + docName + "_assignments.json";
-                if (File(path).exists) assignmentFile = File(path);
-            }
-        } catch(e) {}
-    }
+    var errors = [];
+    var warnings = [];
 
-    // If still not found, prompt user
-    if (!assignmentFile || !assignmentFile.exists) {
-        assignmentFile = File.openDialog("Select the Assignments JSON file", "*.json");
-    }
-
-    if (!assignmentFile) {
-        return; // User cancelled
-    }
-
-    // 2. Read and Parse JSON
-    assignmentFile.open("r");
-    assignmentFile.encoding = "UTF-8";
-    var jsonString = assignmentFile.read();
-    assignmentFile.close();
-
-    var data;
-    try {
-        // ExtendScript doesn't have native JSON.parse, using eval safely-ish
-        data = eval("(" + jsonString + ")");
-    } catch(e) {
-        alert("Error parsing JSON file: " + e);
-        return;
-    }
-
-    // 3. Process Assignments
-    var projectRoot = assignmentFile.parent; // Assume images are relative to the JSON file
-    
-    // Turn off interaction for speed
-    var originalInteractionLevel = app.scriptPreferences.userInteractionLevel;
+    var originalInteraction = app.scriptPreferences.userInteractionLevel;
     app.scriptPreferences.userInteractionLevel = UserInteractionLevels.NEVER_INTERACT;
 
     try {
+        if (!data.pages || data.pages.length === 0) {
+            throw new Error("Assignment document has no pages.");
+        }
+
+        var assignmentRootFolder = assignmentFile.parent;
+
+        var createPages = (data.artifact_type === "cards" && data.output_mode === "deck");
+        var duplicateFromFirstPage = createPages;
+
         for (var i = 0; i < data.pages.length; i++) {
             var pageData = data.pages[i];
-            
-            // Find the page in the document
-            // We assume the order matches or we try to match by name/index
-            // The JSON has "id": "p1" which usually maps to page index 0 or name "1"
-            
-            var pageIndex = i; 
-            if (pageIndex >= doc.pages.length) {
-                // Page doesn't exist, maybe create it? For now, skip.
+            var page = findPage(doc, pageData, i, createPages, duplicateFromFirstPage);
+
+            if (!page || !page.isValid) {
+                errors.push("Could not resolve page for assignment page id: " + pageData.id);
                 continue;
             }
-            
-            var page = doc.pages[pageIndex];
-            var assignments = pageData.assignments;
 
-            for (var itemName in assignments) {
-                if (!assignments.hasOwnProperty(itemName)) continue;
-                
-                var assignment = assignments[itemName];
-                var item = page.pageItems.itemByName(itemName);
+            var slots = pageData.slots || [];
+            for (var j = 0; j < slots.length; j++) {
+                var slot = slots[j];
+                if (!slot || !slot.name) {
+                    errors.push("Invalid slot definition on page " + pageData.id + " at index " + j);
+                    continue;
+                }
 
-                if (item && item.isValid) {
-                    processItem(item, assignment, projectRoot);
-                } else {
-                    // Fallback: Try to find by parsing the ID (e.g. TF_P1_3 -> Index 2)
-                    // Format: [Type]_P[PageName]_[Index+1]
-                    // We assume the page matches.
-                    var parts = itemName.split('_');
-                    if (parts.length >= 3) {
-                        var indexStr = parts[parts.length - 1]; // Last part is the index (1-based)
-                        var index = parseInt(indexStr, 10) - 1; // Convert to 0-based
-                        
-                        if (!isNaN(index) && index >= 0 && index < page.allPageItems.length) {
-                            // Note: allPageItems is z-order. 
-                            // We hope the order hasn't changed since export.
-                            var candidate = page.allPageItems[index];
-                            if (candidate.isValid) {
-                                // Optional: Check type to be sure?
-                                // var typePrefix = (candidate instanceof TextFrame) ? "TF" : "Obj";
-                                // if (itemName.indexOf(typePrefix) === 0) ...
-                                
-                                processItem(candidate, assignment, projectRoot);
-                            }
-                        }
+                var item = resolveItemForSlot(page, slot);
+                if (!item) {
+                    var msg = "Named slot not found on page " + page.name + ": " + slot.name;
+                    if (strict) {
+                        errors.push(msg);
+                    } else {
+                        warnings.push(msg);
                     }
+                    continue;
                 }
+
+                applySlot(item, slot, doc, assignmentRootFolder, warnings);
             }
         }
-        alert("Ingest complete!");
-    } catch(e) {
-        alert("Error during ingest: " + e);
+    } catch (e) {
+        errors.push(String(e));
     } finally {
-        app.scriptPreferences.userInteractionLevel = originalInteractionLevel;
-    }
-}
-
-function processItem(item, assignment, projectRoot) {
-    if (item instanceof TextFrame) {
-        // Text Content
-        if (assignment.content) {
-            // If it's "CONTENT GOES HERE", maybe we skip it if we want to preserve the template?
-            // But usually we want to overwrite.
-            if (assignment.content !== "CONTENT GOES HERE") {
-                item.contents = assignment.content;
-            }
-        }
-        
-        // Apply Style (Optional)
-        if (assignment.style) {
-            try {
-                var style = app.activeDocument.paragraphStyles.itemByName(assignment.style);
-                if (style.isValid) {
-                    item.paragraphs.everyItem().applyParagraphStyle(style, true);
-                }
-            } catch(e) {}
-        }
-
-    } else if (item instanceof Rectangle || item instanceof Oval || item instanceof Polygon) {
-        // Image Content
-        if (assignment.src && assignment.src !== "images/placeholder.jpg") {
-            placeImage(item, assignment.src, projectRoot);
-        }
-        
-        // Caption? 
-        // If there is a caption field and we have a way to handle it (e.g. metadata or a grouped text frame)
-        // For now, we ignore captions unless we have a specific convention.
-    }
-}
-
-function placeImage(item, src, projectRoot) {
-    var fileToPlace;
-
-    // Check if URL
-    if (src.indexOf("http://") === 0 || src.indexOf("https://") === 0) {
-        fileToPlace = downloadImage(src);
-    } else {
-        // Local file
-        // Resolve relative to project root
-        fileToPlace = new File(projectRoot.fsName + "/" + src);
+        app.scriptPreferences.userInteractionLevel = originalInteraction;
     }
 
-    if (fileToPlace && fileToPlace.exists) {
-        try {
-            item.place(fileToPlace);
-            item.fit(FitOptions.FILL_PROPORTIONALLY);
-            item.fit(FitOptions.CENTER_CONTENT);
-        } catch(e) {
-            $.writeln("Failed to place image: " + src + " (" + e + ")");
-        }
-    } else {
-        $.writeln("Image file not found: " + src);
+    if (errors.length > 0) {
+        alert("Ingest failed with " + errors.length + " error(s).\n\n" + errors.slice(0, 10).join("\n"));
+        return;
     }
-}
 
-function downloadImage(url) {
-    try {
-        var tempFolder = Folder.temp.fsName;
-        // Create a safe filename from URL
-        var filename = url.split('/').pop().split('?')[0];
-        if (!filename) filename = "downloaded_image.jpg";
-        
-        var targetFile = tempFolder + "/" + new Date().getTime() + "_" + filename;
-        
-        // Use curl to download
-        var curlCmd = "curl -L -s '" + url + "' -o '" + targetFile + "'";
-        var appleScript = 'do shell script "' + curlCmd + '"';
-        
-        app.doScript(appleScript, ScriptLanguage.APPLESCRIPT_LANGUAGE);
-        
-        var file = new File(targetFile);
-        if (file.exists) return file;
-        
-    } catch(e) {
-        $.writeln("Error downloading image: " + e);
+    var summary = "Ingest complete.";
+    if (warnings.length > 0) {
+        summary += "\nWarnings: " + warnings.length + "\n" + warnings.slice(0, 10).join("\n");
     }
-    return null;
+
+    alert(summary);
 }
 
 main(typeof arguments !== "undefined" ? arguments : []);

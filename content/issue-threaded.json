@@ -1,0 +1,35 @@
+{
+  "layout": "newspaper_tabloid",
+  "theme": "newspaper",
+  "title": "The Near Future Times",
+  "issue": "Vol. 1 No. 1",
+  "date": "2025-10-15",
+  "pages": [
+    {
+      "id": "p1",
+      "template": "frontpage_threaded",
+      "masthead": "The Near Future Times",
+      "kicker": "Threaded Text Engine",
+      "lead": {
+        "headline": "City Opens Office of Speculative Works",
+        "dek": "A new department prototypes policies before they are laws.",
+        "byline": "By J. Bleecker",
+        "body": "The city announced a new Office of Speculative Works tasked with piloting civic ideas as if they were products.\n\nEarly programs include a seasonal residency for policy prototypes. \"We want to move beyond think tanks and public comment,\" said the office's director. \"By treating policies as prototypes, we can learn what works and what doesn't in context.\"\n\nWhile the office is initially funded through grants, city officials hope to demonstrate value that leads to permanent budget allocation. When there is uncertainty about how a policy will play out, prototyping allows for real-world feedback before committing to full implementation.\n\nCritics worry that prototyping may delay necessary reforms or lead to half-measures. However, supporters argue that it provides a way to test ideas without full commitment, reducing risks associated with untested policies.\n\nThe concept of 'Speculative Works' draws from design fiction and futures studies, disciplines that use narrative and artifacts to explore possible futures. By applying these methods to governance, the city hopes to anticipate unintended consequences of new technologies and social programs.\n\nOne proposed project involves a 'shadow currency' that tracks social capital, running in parallel with the dollar for a six-month trial in a single neighborhood. Another looks at 'algorithmic zoning,' where building codes adjust dynamically based on real-time usage data.\n\n\"It's about agility,\" said Mayor Thompson. \"The 20th-century model of legislation is too slow for the 21st-century rate of change. We need to iterate.\"\n\nThe office will also host public workshops, inviting citizens to 'playtest' new laws. This participatory approach aims to rebuild trust in government institutions by making the legislative process more transparent and experimental.\n\nFunding for the initiative comes from a coalition of tech philanthropists and civic innovation funds, raising questions about the influence of private capital on public policy. The director assures that all prototypes will be subject to rigorous ethical review and democratic oversight.\n\nAs the first projects launch later this year, eyes from other municipalities will be watching closely. If successful, the Office of Speculative Works could become a model for adaptive governance in an unpredictable world."
+      },
+      "story_frames": [
+        { "grid_column": "1 / span 2", "grid_row": "2 / span 4", "note": "Left column, top half" },
+        { "grid_column": "1 / span 3", "grid_row": "6 / span 6", "note": "Full width, bottom half (wrapping under the sidebar)" }
+      ],
+      "sidebar": {
+        "headline": "Briefs",
+        "grid_column": "3 / span 1",
+        "grid_row": "2 / span 4",
+        "items": [
+          { "headline": "Signals Report", "body": "Weak signals are now tracked in a public dashboard." },
+          { "headline": "Lab Opens", "body": "A new lab will prototype community rituals." },
+          { "headline": "Transit Trial", "body": "A pilot route tests time-shifted commuting." }
+        ]
+      }
+    }
+  ]
+}
