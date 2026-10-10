@@ -1,0 +1,1113 @@
+{
+      "metadata": {
+        "templateName": "ai-newspaper-tabloid_03.indt",
+        "flatplanFile": "ai-newspaper-tabloid_03_layout-map.json",
+        "generatedAt": "Fri Jan 02 2026 20:37:29 GMT-0800"
+      },
+      "pages": [
+        {
+          "id": "p1",
+          "assignments": {
+            "Obj_P1_1": {
+              "src": "https://placecats.com/300/200",
+              "caption": "A test cat image"
+            },
+            "TF_P1_3": {
+              "content": "THE FUTURE IS FELINE",
+              "style": "[Basic Paragraph]",
+              "estimated_words": 3
+            },
+            "Obj_P1_4": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "Obj_P1_6": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "TF_P1_8": {
+              "content": "CONTENT GOES HERE",
+              "style": "[Basic Paragraph]",
+              "estimated_words": 15
+            },
+            "TF_P1_9": {
+              "content": "CONTENT GOES HERE",
+              "style": "Continued",
+              "estimated_words": 8
+            },
+            "TF_P1_11": {
+              "content": "CONTENT GOES HERE",
+              "style": "[Basic Paragraph]",
+              "estimated_words": 3
+            },
+            "TF_P1_12": {
+              "content": "CONTENT GOES HERE",
+              "style": "NYT Style Headline",
+              "estimated_words": 11
+            },
+            "TF_P1_13": {
+              "content": "CONTENT GOES HERE",
+              "style": "[Basic Paragraph]",
+              "estimated_words": 2
+            },
+            "Obj_P1_14": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "TF_P1_16": {
+              "content": "CONTENT GOES HERE",
+              "style": "Body Text",
+              "estimated_words": 370,
+              "note": "This is the start of a threaded story. Content will flow automatically to subsequent frames."
+            },
+            "TF_P1_17": {
+              "content": "CONTENT GOES HERE",
+              "style": "Top Headling",
+              "estimated_words": 10
+            },
+            "TF_P1_18": {
+              "content": "CONTENT GOES HERE",
+              "style": "Top Headling",
+              "estimated_words": 10
+            },
+            "TF_P1_19": {
+              "content": "This is the start of a threaded story. Content will flow automatically to subsequent frames. This will be a long story to test how text flows across multiple text frames and pages in the layout. What we want to see is that the text continues seamlessly from one frame to the next, regardless of where the frames are located on the pages. This will help ensure that our layout engine is functioning correctly and can handle complex text flows without any issues. And then some more text to make sure we have enough content to really test this feature thoroughly. So we must go on... and on, adding more and more text until we are satisfied that the test is comprehensive enough to cover all possible scenarios that might arise in a real-world publication setting.exploration. Some owners use their digital counterparts as sparring partners for decision-making, engaging in simulated debates to test out ideas before implementing them in real life. “It’s like having an external version of my gut instinct, but with more reasoning power,” says another digitwin owner, who credits their model with helping them negotiate a challenging business acquisition.\r\rAdditionally, digitwins are finding roles in collaborative environments, acting as proxies for users in meetings or creative brainstorming sessions. By learning and adapting to their owners’ preferences, these models can present suggestions or advocate for ideas, making them invaluable in high-stakes scenarios where time or presence is limited. As digitwins become more capable, their potential to extend human capability feels less like science fiction and more like an inevitable evolution in how we navigate the complexities of modern life.\rSome digitwin owners are even exploring therapeutic applications, using their replicas as tools for self-reflection. By engaging in conversations with a model that mirrors their own thoughts and behaviors, users gain new insights into their decision-making processes and emotional patterns. “It’s like having a mirror for my mind,” says one user, who credits their digitwin with helping them work through unresolved grief.\rAs more and more people opt to integrate digitwins into their work and home life, fashion brands are finding that they have a new market to cater to. From wearable accessories, styling services, bespoke clothing are becoming more a part of the digitwin lifestyle. Netflix has recently optioned a series that features fashon styling for digitwins in collaboration with the culture and lifestyle brand Brain Dead. Some digitwins are fully autonomous and have their own sense of style, while others rely on their owners to curate their wardrobe.\rThe fashion industry is abuzz with the possibilities of digitwin styling, with designers and brands alike eager to tap into this emerging market.\rDigitwin stylists are even accepting the interlink issues that riggers are finding as more of an evolutionary characteristic of the trend rather than a bug in the system. “It’s like having a digital twin of your digital twin,” says one stylist. “It’s a way to explore the boundaries of identity and expression, to see how far you can push the limits of who you are.”\rAs more and more people opt to integrate digitwins into their work and home life, fashion brands are finding that they have a new market to cater to. From wearable accessories, styling services, bespoke clothing are becoming more a part of the digitwin lifestyle. Netflix has recently optioned a series that features fashon styling for digitwins in collaboration with the culture and lifestyle brand Brain Dead. Some digitwins are fully autonomous and have their own sense of style, while others rely on their owners to curate their wardrobe. The fashion industry is abuzz with the possibilities of digitwin styling, with designers and brands alike eager to tap into this emerging market.\rDigitwin stylists are even accepting the interlink issues that riggers are finding as more of an evolutionary characteristic of the trend rather than a bug in the system. “It’s like having a digital twin of your digital twin,” says one stylist. “It’s a way to explore the boundaries of identity and expression, to see how far you can push the limits of who you are.\rThis is the start of a threaded story. Content will flow automatically to subsequent frames. This will be a long story to test how text flows across multiple text frames and pages in the layout. What we want to see is that the text continues seamlessly from one frame to the next, regardless of where the frames are located on the pages. This will help ensure that our layout engine is functioning correctly and can handle complex text flows without any issues. And then some more text to make sure we have enough content to really test this feature thoroughly. So we must go on... and on, adding more and more text until we are satisfied that the test is comprehensive enough to cover all possible scenarios that might arise in a real-world publication setting.exploration. Some owners use their digital counterparts as sparring partners for decision-making, engaging in simulated debates to test out ideas before implementing them in real life. “It’s like having an external version of my gut instinct, but with more reasoning power,” says another digitwin owner, who credits their model with helping them negotiate a challenging business acquisition.\r\rThis is the start of a threaded story. Content will flow automatically to subsequent frames. This will be a long story to test how text flows across multiple text frames and pages in the layout. What we want to see is that the text continues seamlessly from one frame to the next, regardless of where the frames are located on the pages. This will help ensure that our layout engine is functioning correctly and can handle complex text flows without any issues. And then some more text to make sure we have enough content to really test this feature thoroughly. So we must go on... and on, adding more and more text until we are satisfied that the test is comprehensive enough to cover all possible scenarios that might arise in a real-world publication setting.exploration. Some owners use their digital counterparts as sparring partners for decision-making, engaging in simulated debates to test out ideas before implementing them in real life. “It’s like having an external version of my gut instinct, but with more reasoning power,” says another digitwin owner, who credits their model with helping them negotiate a challenging business acquisition.\r\r”",
+              "style": "Body Text",
+              "estimated_words": 562,
+              "note": ""
+            },
+            "TF_P1_20": {
+              "content": "THIS IS HERE AS A PLACEHOLDER",
+              "style": "[Basic Paragraph]",
+              "estimated_words": 10
+            },
+            "Obj_P1_21": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "TF_P1_25": {
+              "content": "CONTENT GOES HERE",
+              "style": "Body Text",
+              "estimated_words": 11
+            }
+          }
+        },
+        {
+          "id": "p2",
+          "assignments": {
+            "TF_P2_1": {
+              "content": "CONTENT GOES HERE",
+              "style": "Top Headling",
+              "estimated_words": 5
+            },
+            "Obj_P2_2": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "TF_P2_4": {
+              "content": "CONTENT GOES HERE",
+              "style": "[Basic Paragraph]",
+              "estimated_words": 6
+            },
+            "TF_P2_6": {
+              "content": "CONTENT GOES HERE",
+              "style": "Body Text",
+              "estimated_words": 14
+            },
+            "TF_P2_7": {
+              "content": "CONTENT GOES HERE",
+              "style": "NYT Style Headline",
+              "estimated_words": 8
+            },
+            "TF_P2_8": {
+              "content": "CONTENT GOES HERE",
+              "style": "[Basic Paragraph]",
+              "estimated_words": 3
+            },
+            "TF_P2_9": {
+              "content": "CONTENT GOES HERE",
+              "style": "Body Text",
+              "estimated_words": 1016
+            },
+            "TF_P2_10": {
+              "content": "CONTENT GOES HERE",
+              "style": "Top Headling",
+              "estimated_words": 8
+            }
+          }
+        },
+        {
+          "id": "p3",
+          "assignments": {
+            "TF_P3_2": {
+              "content": "CONTENT GOES HERE",
+              "style": "[Basic Paragraph]",
+              "estimated_words": 5
+            },
+            "TF_P3_3": {
+              "content": "CONTENT GOES HERE",
+              "style": "Top Headling",
+              "estimated_words": 20
+            },
+            "TF_P3_4": {
+              "content": "CONTENT GOES HERE",
+              "style": "Byline",
+              "estimated_words": 20
+            },
+            "Obj_P3_6": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            }
+          }
+        },
+        {
+          "id": "p4",
+          "assignments": {
+            "Obj_P4_2": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "Obj_P4_4": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "TF_P4_6": {
+              "content": "CONTENT GOES HERE",
+              "style": "Byline",
+              "estimated_words": 1
+            },
+            "TF_P4_7": {
+              "content": "CONTENT GOES HERE",
+              "style": "[Basic Paragraph]",
+              "estimated_words": 14
+            },
+            "Obj_P4_8": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "TF_P4_10": {
+              "content": "CONTENT GOES HERE",
+              "style": "Body Text",
+              "estimated_words": 524,
+              "note": "This is the start of a threaded story. Content will flow automatically to subsequent frames."
+            },
+            "TF_P4_11": {
+              "content": "CONTENT GOES HERE",
+              "style": "Top Headling",
+              "estimated_words": 7
+            }
+          }
+        },
+        {
+          "id": "p5",
+          "assignments": {
+            "Obj_P5_1": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "Obj_P5_3": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            }
+          }
+        },
+        {
+          "id": "p6",
+          "assignments": {
+            "TF_P6_2": {
+              "content": "CONTENT GOES HERE",
+              "style": "[Basic Paragraph]",
+              "estimated_words": 2
+            },
+            "Obj_P6_3": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "TF_P6_4": {
+              "content": "CONTENT GOES HERE",
+              "style": "[Basic Paragraph]",
+              "estimated_words": 38
+            },
+            "TF_P6_5": {
+              "content": "CONTENT GOES HERE",
+              "style": "Byline",
+              "estimated_words": 7
+            },
+            "TF_P6_7": {
+              "content": "CONTENT GOES HERE",
+              "style": "Byline",
+              "estimated_words": 11
+            },
+            "Obj_P6_9": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "Obj_P6_10": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "Obj_P6_11": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "Obj_P6_12": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "Obj_P6_13": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "TF_P6_14": {
+              "content": "CONTENT GOES HERE",
+              "style": "Body Text",
+              "estimated_words": 1078
+            },
+            "Obj_P6_15": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            }
+          }
+        },
+        {
+          "id": "p7",
+          "assignments": {
+            "TF_P7_1": {
+              "content": "CONTENT GOES HERE",
+              "style": "Body Text",
+              "estimated_words": 13
+            },
+            "Obj_P7_2": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "Obj_P7_4": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "TF_P7_6": {
+              "content": "CONTENT GOES HERE",
+              "style": "Byline",
+              "estimated_words": 5
+            },
+            "TF_P7_7": {
+              "content": "CONTENT GOES HERE",
+              "style": "Byline",
+              "estimated_words": 5
+            },
+            "TF_P7_8": {
+              "content": "CONTENT GOES HERE",
+              "style": "NYT Style Headline",
+              "estimated_words": 16
+            },
+            "TF_P7_9": {
+              "content": "CONTENT GOES HERE",
+              "style": "NYT Style Headline",
+              "estimated_words": 15
+            },
+            "TF_P7_10": {
+              "content": "CONTENT GOES HERE",
+              "style": "Top Headling",
+              "estimated_words": 8
+            },
+            "TF_P7_11": {
+              "content": "CONTENT GOES HERE",
+              "style": "Top Headling",
+              "estimated_words": 16
+            },
+            "TF_P7_12": {
+              "content": "CONTENT GOES HERE",
+              "style": "Body Text",
+              "estimated_words": 337
+            },
+            "TF_P7_13": {
+              "content": "CONTENT GOES HERE",
+              "style": "Body Text",
+              "estimated_words": 554
+            }
+          }
+        },
+        {
+          "id": "p8",
+          "assignments": {
+            "Obj_P8_1": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "TF_P8_3": {
+              "content": "CONTENT GOES HERE",
+              "style": "Byline",
+              "estimated_words": 3
+            },
+            "TF_P8_4": {
+              "content": "CONTENT GOES HERE",
+              "style": "Byline",
+              "estimated_words": 2
+            },
+            "TF_P8_5": {
+              "content": "CONTENT GOES HERE",
+              "style": "Body Text",
+              "estimated_words": 1131
+            },
+            "TF_P8_6": {
+              "content": "CONTENT GOES HERE",
+              "style": "NYT Style Headline",
+              "estimated_words": 19
+            },
+            "TF_P8_7": {
+              "content": "CONTENT GOES HERE",
+              "style": "Top Headling",
+              "estimated_words": 18
+            },
+            "TF_P8_8": {
+              "content": "CONTENT GOES HERE",
+              "style": "Top Headling",
+              "estimated_words": 11
+            },
+            "TF_P8_9": {
+              "content": "CONTENT GOES HERE",
+              "style": "Body Text",
+              "estimated_words": 607
+            }
+          }
+        },
+        {
+          "id": "p9",
+          "assignments": {
+            "Obj_P9_1": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            }
+          }
+        },
+        {
+          "id": "p10",
+          "assignments": {
+            "Obj_P10_1": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "TF_P10_3": {
+              "content": "CONTENT GOES HERE",
+              "style": "Byline",
+              "estimated_words": 7
+            },
+            "TF_P10_4": {
+              "content": "CONTENT GOES HERE",
+              "style": "NYT Style Headline",
+              "estimated_words": 7
+            },
+            "TF_P10_5": {
+              "content": "CONTENT GOES HERE",
+              "style": "Top Headling",
+              "estimated_words": 15
+            },
+            "TF_P10_6": {
+              "content": "CONTENT GOES HERE",
+              "style": "Body Text",
+              "estimated_words": 1602
+            }
+          }
+        },
+        {
+          "id": "p11",
+          "assignments": {
+            "Obj_P11_1": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            }
+          }
+        },
+        {
+          "id": "p12",
+          "assignments": {
+            "Obj_P12_1": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "TF_P12_4": {
+              "content": "CONTENT GOES HERE",
+              "style": "[Basic Paragraph]",
+              "estimated_words": 3
+            },
+            "Obj_P12_5": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "TF_P12_7": {
+              "content": "CONTENT GOES HERE",
+              "style": "Body Text",
+              "estimated_words": 30
+            },
+            "TF_P12_9": {
+              "content": "CONTENT GOES HERE",
+              "style": "NYT Style Headline",
+              "estimated_words": 40
+            },
+            "TF_P12_10": {
+              "content": "CONTENT GOES HERE",
+              "style": "Byline",
+              "estimated_words": 4
+            },
+            "TF_P12_11": {
+              "content": "CONTENT GOES HERE",
+              "style": "Top Headling",
+              "estimated_words": 9
+            },
+            "TF_P12_12": {
+              "content": "CONTENT GOES HERE",
+              "style": "Body Text",
+              "estimated_words": 1069
+            }
+          }
+        },
+        {
+          "id": "p13",
+          "assignments": {
+            "Obj_P13_1": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            }
+          }
+        },
+        {
+          "id": "p14",
+          "assignments": {
+            "TF_P14_1": {
+              "content": "CONTENT GOES HERE",
+              "style": "Byline",
+              "estimated_words": 5
+            },
+            "TF_P14_2": {
+              "content": "CONTENT GOES HERE",
+              "style": "NYT Style Headline",
+              "estimated_words": 10
+            },
+            "TF_P14_3": {
+              "content": "CONTENT GOES HERE",
+              "style": "Top Headling",
+              "estimated_words": 7
+            },
+            "TF_P14_4": {
+              "content": "CONTENT GOES HERE",
+              "style": "Body Text",
+              "estimated_words": 580
+            },
+            "Obj_P14_5": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            }
+          }
+        },
+        {
+          "id": "p15",
+          "assignments": {
+            "Obj_P15_1": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "Obj_P15_2": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "Obj_P15_4": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "Obj_P15_5": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "TF_P15_6": {
+              "content": "CONTENT GOES HERE",
+              "style": "[Basic Paragraph]",
+              "estimated_words": 184
+            },
+            "TF_P15_9": {
+              "content": "CONTENT GOES HERE",
+              "style": "Body Text",
+              "estimated_words": 0
+            },
+            "TF_P15_10": {
+              "content": "CONTENT GOES HERE",
+              "style": "Body Text",
+              "estimated_words": 0
+            },
+            "TF_P15_11": {
+              "content": "CONTENT GOES HERE",
+              "style": "[Basic Paragraph]",
+              "estimated_words": 39
+            },
+            "TF_P15_13": {
+              "content": "CONTENT GOES HERE",
+              "style": "Body Text",
+              "estimated_words": 0
+            },
+            "TF_P15_14": {
+              "content": "CONTENT GOES HERE",
+              "style": "Body Text",
+              "estimated_words": 0
+            },
+            "TF_P15_16": {
+              "content": "CONTENT GOES HERE",
+              "style": "[Basic Paragraph]",
+              "estimated_words": 24
+            },
+            "TF_P15_17": {
+              "content": "CONTENT GOES HERE",
+              "style": "[Basic Paragraph]",
+              "estimated_words": 26
+            }
+          }
+        },
+        {
+          "id": "p16",
+          "assignments": {
+            "Obj_P16_1": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            }
+          }
+        },
+        {
+          "id": "p17",
+          "assignments": {
+            "TF_P17_1": {
+              "content": "CONTENT GOES HERE",
+              "style": "Body Text",
+              "estimated_words": 18
+            },
+            "TF_P17_2": {
+              "content": "CONTENT GOES HERE",
+              "style": "Top Headline Interior",
+              "estimated_words": 18
+            },
+            "TF_P17_3": {
+              "content": "CONTENT GOES HERE",
+              "style": "Body Text",
+              "estimated_words": 1114
+            },
+            "TF_P17_5": {
+              "content": "CONTENT GOES HERE",
+              "style": "Byline",
+              "estimated_words": 4
+            },
+            "TF_P17_6": {
+              "content": "CONTENT GOES HERE",
+              "style": "NYT Style Headline",
+              "estimated_words": 11
+            },
+            "Obj_P17_7": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "Obj_P17_9": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "Obj_P17_11": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "TF_P17_12": {
+              "content": "CONTENT GOES HERE",
+              "style": "Top Headline Interior",
+              "estimated_words": 8
+            },
+            "TF_P17_13": {
+              "content": "CONTENT GOES HERE",
+              "style": "Body Text",
+              "estimated_words": 495
+            }
+          }
+        },
+        {
+          "id": "p18",
+          "assignments": {
+            "Obj_P18_1": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "TF_P18_4": {
+              "content": "CONTENT GOES HERE",
+              "style": "NYT Style Headline",
+              "estimated_words": 10
+            },
+            "TF_P18_5": {
+              "content": "CONTENT GOES HERE",
+              "style": "Byline",
+              "estimated_words": 3
+            },
+            "TF_P18_6": {
+              "content": "CONTENT GOES HERE",
+              "style": "Top Headline Interior",
+              "estimated_words": 18
+            },
+            "TF_P18_7": {
+              "content": "CONTENT GOES HERE",
+              "style": "Body Text",
+              "estimated_words": 1348
+            }
+          }
+        },
+        {
+          "id": "p19",
+          "assignments": {
+            "Obj_P19_1": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "TF_P19_3": {
+              "content": "CONTENT GOES HERE",
+              "style": "Continued",
+              "estimated_words": 38
+            },
+            "Obj_P19_4": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "TF_P19_6": {
+              "content": "CONTENT GOES HERE",
+              "style": "Continued",
+              "estimated_words": 10
+            },
+            "TF_P19_7": {
+              "content": "CONTENT GOES HERE",
+              "style": "NYT Style Headline",
+              "estimated_words": 13
+            },
+            "TF_P19_8": {
+              "content": "CONTENT GOES HERE",
+              "style": "NYT Style Headline",
+              "estimated_words": 17
+            },
+            "TF_P19_9": {
+              "content": "CONTENT GOES HERE",
+              "style": "Byline",
+              "estimated_words": 7
+            },
+            "TF_P19_10": {
+              "content": "CONTENT GOES HERE",
+              "style": "Top Headling",
+              "estimated_words": 6
+            },
+            "TF_P19_11": {
+              "content": "CONTENT GOES HERE",
+              "style": "Body Text",
+              "estimated_words": 982,
+              "note": "This is the start of a threaded story. Content will flow automatically to subsequent frames."
+            }
+          }
+        },
+        {
+          "id": "p20",
+          "assignments": {
+            "TF_P20_1": {
+              "content": "CONTENT GOES HERE",
+              "style": "Continued",
+              "estimated_words": 6
+            },
+            "TF_P20_3": {
+              "content": "CONTENT GOES HERE",
+              "style": "Continued",
+              "estimated_words": 28
+            },
+            "Obj_P20_4": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "TF_P20_6": {
+              "content": "CONTENT GOES HERE",
+              "style": "NYT Style Headline",
+              "estimated_words": 11
+            },
+            "TF_P20_7": {
+              "content": "CONTENT GOES HERE",
+              "style": "Top Headline Interior",
+              "estimated_words": 10
+            },
+            "TF_P20_8": {
+              "content": "CONTENT GOES HERE",
+              "style": "Body Text",
+              "estimated_words": 1545,
+              "note": "This is the start of a threaded story. Content will flow automatically to subsequent frames."
+            },
+            "TF_P20_9": {
+              "content": "CONTENT GOES HERE",
+              "style": "Byline",
+              "estimated_words": 4
+            }
+          }
+        },
+        {
+          "id": "p21",
+          "assignments": {
+            "Obj_P21_3": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "Obj_P21_5": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "TF_P21_7": {
+              "content": "CONTENT GOES HERE",
+              "style": "Inline Mini Headline",
+              "estimated_words": 6
+            },
+            "TF_P21_8": {
+              "content": "CONTENT GOES HERE",
+              "style": "Inline Mini Headline",
+              "estimated_words": 6
+            },
+            "TF_P21_9": {
+              "content": "CONTENT GOES HERE",
+              "style": "Continued",
+              "estimated_words": 5
+            },
+            "TF_P21_10": {
+              "content": "CONTENT GOES HERE",
+              "style": "Continued",
+              "estimated_words": 6
+            }
+          }
+        },
+        {
+          "id": "p22",
+          "assignments": {
+            "TF_P22_1": {
+              "content": "CONTENT GOES HERE",
+              "style": "Continued",
+              "estimated_words": 6
+            },
+            "TF_P22_3": {
+              "content": "CONTENT GOES HERE",
+              "style": "Continued",
+              "estimated_words": 26
+            },
+            "Obj_P22_4": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "TF_P22_6": {
+              "content": "CONTENT GOES HERE",
+              "style": "[Basic Paragraph]",
+              "estimated_words": 28
+            },
+            "Obj_P22_7": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "TF_P22_9": {
+              "content": "CONTENT GOES HERE",
+              "style": "Body Text",
+              "estimated_words": 988,
+              "note": "This is the start of a threaded story. Content will flow automatically to subsequent frames."
+            },
+            "TF_P22_10": {
+              "content": "CONTENT GOES HERE",
+              "style": "Top Headling",
+              "estimated_words": 8
+            }
+          }
+        },
+        {
+          "id": "p23",
+          "assignments": {
+            "TF_P23_1": {
+              "content": "CONTENT GOES HERE",
+              "style": "[Basic Paragraph]",
+              "estimated_words": 40
+            },
+            "Obj_P23_2": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "TF_P23_4": {
+              "content": "CONTENT GOES HERE",
+              "style": "NYT Style Headline",
+              "estimated_words": 33
+            },
+            "TF_P23_5": {
+              "content": "CONTENT GOES HERE",
+              "style": "Top Headling",
+              "estimated_words": 10
+            },
+            "TF_P23_6": {
+              "content": "CONTENT GOES HERE",
+              "style": "Body Text",
+              "estimated_words": 1263
+            }
+          }
+        },
+        {
+          "id": "p24",
+          "assignments": {
+            "TF_P24_1": {
+              "content": "CONTENT GOES HERE",
+              "style": "DIN medium 7/10",
+              "estimated_words": 55
+            },
+            "TF_P24_2": {
+              "content": "CONTENT GOES HERE",
+              "style": "DIN medium 7/10",
+              "estimated_words": 47
+            },
+            "Obj_P24_3": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "TF_P24_6": {
+              "content": "CONTENT GOES HERE",
+              "style": "DIN black 10/10",
+              "estimated_words": 8
+            },
+            "Obj_P24_7": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "TF_P24_9": {
+              "content": "CONTENT GOES HERE",
+              "style": "DIN light 7/10",
+              "estimated_words": 131
+            },
+            "Obj_P24_11": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "TF_P24_13": {
+              "content": "CONTENT GOES HERE",
+              "style": "DIN black 10/10",
+              "estimated_words": 104
+            },
+            "TF_P24_14": {
+              "content": "CONTENT GOES HERE",
+              "style": "endorsements",
+              "estimated_words": 64
+            },
+            "Obj_P24_15": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "Obj_P24_17": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "TF_P24_19": {
+              "content": "CONTENT GOES HERE",
+              "style": "Continued",
+              "estimated_words": 1
+            }
+          }
+        },
+        {
+          "id": "p25",
+          "assignments": {
+            "Obj_P25_3": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "TF_P25_6": {
+              "content": "CONTENT GOES HERE",
+              "style": "Continued",
+              "estimated_words": 5
+            },
+            "TF_P25_7": {
+              "content": "CONTENT GOES HERE",
+              "style": "Body Text",
+              "estimated_words": 616,
+              "note": "This is the start of a threaded story. Content will flow automatically to subsequent frames."
+            },
+            "Obj_P25_8": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            }
+          }
+        },
+        {
+          "id": "p26",
+          "assignments": {
+            "Obj_P26_1": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "Obj_P26_3": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "Obj_P26_4": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "Obj_P26_5": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "Obj_P26_6": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "Obj_P26_8": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "Obj_P26_10": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "Obj_P26_12": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "Obj_P26_14": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "Obj_P26_16": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "Obj_P26_18": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            }
+          }
+        },
+        {
+          "id": "p27",
+          "assignments": {
+            "Obj_P27_1": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "Obj_P27_3": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "Obj_P27_4": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "Obj_P27_5": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "Obj_P27_7": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "Obj_P27_9": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "Obj_P27_11": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "Obj_P27_13": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "Obj_P27_15": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "Obj_P27_17": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            }
+          }
+        },
+        {
+          "id": "p28",
+          "assignments": {
+            "Obj_P28_2": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "TF_P28_5": {
+              "content": "CONTENT GOES HERE",
+              "style": "Classified Section",
+              "estimated_words": 225,
+              "note": "This is the start of a threaded story. Content will flow automatically to subsequent frames."
+            },
+            "TF_P28_6": {
+              "content": "CONTENT GOES HERE",
+              "style": "Classified Section",
+              "estimated_words": 1414
+            }
+          }
+        },
+        {
+          "id": "p29",
+          "assignments": {
+            "Obj_P29_2": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "TF_P29_4": {
+              "content": "CONTENT GOES HERE",
+              "style": "Classifieds Body",
+              "estimated_words": 1880
+            }
+          }
+        },
+        {
+          "id": "p30",
+          "assignments": {
+            "Obj_P30_1": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            }
+          }
+        },
+        {
+          "id": "p31",
+          "assignments": {
+            "TF_P31_1": {
+              "content": "CONTENT GOES HERE",
+              "style": "[Basic Paragraph]",
+              "estimated_words": 10
+            },
+            "TF_P31_2": {
+              "content": "CONTENT GOES HERE",
+              "style": "Body Text",
+              "estimated_words": 48
+            },
+            "TF_P31_3": {
+              "content": "CONTENT GOES HERE",
+              "style": "Byline",
+              "estimated_words": 2
+            },
+            "TF_P31_4": {
+              "content": "CONTENT GOES HERE",
+              "style": "Byline",
+              "estimated_words": 4
+            },
+            "TF_P31_5": {
+              "content": "CONTENT GOES HERE",
+              "style": "Byline",
+              "estimated_words": 6
+            },
+            "Obj_P31_6": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            },
+            "TF_P31_8": {
+              "content": "CONTENT GOES HERE",
+              "style": "Body Text",
+              "estimated_words": 603
+            }
+          }
+        },
+        {
+          "id": "p32",
+          "assignments": {
+            "Obj_P32_1": {
+              "src": "images/placeholder.jpg",
+              "caption": "Caption goes here"
+            }
+          }
+        }
+      ]
+    }
