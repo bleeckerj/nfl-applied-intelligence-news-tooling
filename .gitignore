@@ -6,3 +6,9 @@ dist/
 .env.*
 *-workspace
 images/
+
+# Local InDesign extraction assets and generated previews
+/ai-newspaper-tabloid_03_extracted.json/
+/*_flatplan.pdf
+/preview.html
+/Untitled
